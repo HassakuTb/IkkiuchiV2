@@ -12,7 +12,7 @@ namespace Ikkiuchi.TitleScenes {
         /// 部屋へ遷移する
         /// </summary>
         public void TransitionToRoomScene() {
-            sceneManaer.LoadScene(SceneEnum.RoomScene);
+            sceneManaer.LoadScene(SceneEnum.LobbyScene);
         }
     }
 }
