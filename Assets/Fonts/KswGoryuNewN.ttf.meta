@@ -1,5 +1,7 @@
 fileFormatVersion: 2
-guid: 376ddc2d979158d4bb09d188a4191f2c
+guid: 63fcb14c51c0c86429200ee92b831d8f
+timeCreated: 1533527609
+licenseType: Free
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,15 +10,14 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: KH Dot Dougenzaka 16
+  fontName: KswGoryuNewN
   fontNames:
-  - KH Dot Dougenzaka 16
+  - KswGoryuNewN
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
   useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
   userData: 
   assetBundleName: 
   assetBundleVariant: 
