@@ -16,6 +16,8 @@ namespace IkkiuchiV2.Core {
         //  相対位置→絶対位置変換
         Pos RelativePosToAbsolute(RelativePos relative);
         
+        //  持ち主のプレイヤー
+        IPlayer Owner { get; }
     }
 
     //  IEnumerable<RelativePos>拡張
