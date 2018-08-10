@@ -5,4 +5,17 @@
         //  駒への参照
         IGradiator Gradiator { get; }
     }
+
+    public class Player : IPlayer {
+
+
+
+
+        public IGradiator Gradiator {
+            get {
+                throw new System.NotImplementedException();
+            }
+        }
+    }
+
 }
