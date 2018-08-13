@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ChangeDirection
   m_EditorClassIdentifier: 
   actionName: 
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300030, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
   resolveOrder: 0
   penartyMove: 0
   penartyAction: 0
