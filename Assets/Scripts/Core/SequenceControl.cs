@@ -12,22 +12,13 @@ namespace IkkiuchiV2.Core {
         Settle, //  決着
     }
 
-    //  DIインストーラ
-    class SequenceControlInstaller : Installer<SequenceControlInstaller> {
-        public override void InstallBindings() {
-            Container.Bind<>
-        }
-    }
-
     //  シーケンスコントロール
     public class SequenceControl {
 
         //  プレイヤー1
-        [Inject]
         private IPlayer player1;
 
         //  プレイヤー2
-        [Inject]
         private IPlayer player2;
 
 

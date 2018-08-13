@@ -8,5 +8,14 @@
 
         public int X { get; set; }
         public int Y { get; set; }
+
+        //  ボード内の座標かどうか
+        public bool IsInboundBoard() {
+            if (X < 0) return false;
+            if (X >= Board.SizeX) return false;
+            if (Y < 0) return false;
+            if (Y >= Board.SizeY) return false;
+            return true;
+        }
     }
 }
