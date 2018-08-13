@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   actionName: 
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300012, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
   resolveOrder: 0
   penartyMove: 0
   penartyAction: 0
-  damageValue: 0
+  damageValue: 3
