@@ -1,6 +1,11 @@
 ﻿using Zenject;
 
 namespace IkkiuchiV2.Core {
+
+    public interface IPhase {
+
+    }
+
         //  フェーズ
     public enum Phase {
         Start,  //  開始フェーズ
@@ -12,17 +17,20 @@ namespace IkkiuchiV2.Core {
         Settle, //  決着
     }
 
+
+    public interface ISequenceControl {
+
+    }
+
     //  シーケンスコントロール
     public class SequenceControl {
 
-        //  プレイヤー1
-        private IPlayer player1;
 
-        //  プレイヤー2
-        private IPlayer player2;
+        public void MakeBoard() {
+
+        }
 
 
-        
 
     }
 }
