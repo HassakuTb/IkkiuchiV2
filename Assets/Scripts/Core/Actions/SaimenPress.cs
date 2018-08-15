@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace IkkiuchiV2.Core.Actions {
-    //  再面プレス
+    //  西面プレス
     [CreateAssetMenu(menuName = "Actions/SaimenPress", fileName = "SaimenPress")]
     public class SaimenPress : Damage{
 

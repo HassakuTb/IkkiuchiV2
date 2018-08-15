@@ -8,7 +8,7 @@ namespace IkkiuchiV2.Core {
     public interface IGradiator {
 
         //  絶対位置
-        Pos Position { get; }
+        Pos Position { get; set; }
 
         //  相対位置→絶対位置変換
         Pos RelativePosToAbsolute(RelativePos relative);
@@ -18,7 +18,7 @@ namespace IkkiuchiV2.Core {
     public class Gradiator : IGradiator {
 
         //  絶対位置
-        public Pos Position { get; private set; }
+        public Pos Position { get; set; }
 
         //  向き(consistant)
         private GradiatorDirection Direction { get; set; } 
