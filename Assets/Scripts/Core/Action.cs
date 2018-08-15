@@ -17,6 +17,9 @@ namespace IkkiuchiV2.Core {
         //  行動ペナルティ
         bool PenartyAction { get; }
 
+        //  切り札か？
+        bool IsTrump { get; }
+
         //  カード画像
         Sprite CardImage { get; }
     }
@@ -28,6 +31,7 @@ namespace IkkiuchiV2.Core {
         public int resolveOrder;
         public bool penartyMove;
         public bool penartyAction;
+        public bool isTrump;
         
         public string ActionName {
             get {
@@ -56,6 +60,12 @@ namespace IkkiuchiV2.Core {
         public Sprite CardImage {
             get {
                 return cardImage;
+            }
+        }
+
+        public bool IsTrump {
+            get {
+                return isTrump;
             }
         }
     }

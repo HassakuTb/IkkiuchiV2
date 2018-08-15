@@ -2,6 +2,7 @@
 
     //  相対方向
     public enum Direction {
+        None,
         Front,
         Back,
         Left,
