@@ -17,7 +17,7 @@ namespace IkkiuchiV2.Core {
         private IDeck deck;
         private ITrash trash;
 
-        private IRandomGenerator randGen;   //  TODO:   inject
+        private RandomGenerator randGen;   //  TODO:   inject
 
         //  ボードを作成する
         public void MakeBoard() {
@@ -57,8 +57,10 @@ namespace IkkiuchiV2.Core {
         }
 
         //  移動プロット
+        //  プロットしない箇所は-1
         public void MovePlot(IPlayer player, int[] plots) {
             for (int i = 0; i < rule.CountOfMoment; ++i) {
+                if (plots[i] == -1) continue;
                 player.Plots.PlotMove(i, cardSet.GetCard(plots[i]));
             }
         }
