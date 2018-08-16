@@ -22,6 +22,12 @@ namespace IkkiuchiV2.Core {
 
         //  カード画像
         Sprite CardImage { get; }
+
+        //  移動先
+        RelativePos GetMoveTo();
+
+        //  処理
+        void Resolve(bool isCollideMove);
     }
 
     public abstract class Action : ScriptableObject, IAction {
@@ -67,6 +73,14 @@ namespace IkkiuchiV2.Core {
             get {
                 return isTrump;
             }
+        }
+
+        public virtual RelativePos GetMoveTo() {
+            return new RelativePos(0, 0);
+        }
+
+        public　virtual void Resolve(bool isCollideMove) {
+            //  nop
         }
     }
 }

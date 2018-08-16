@@ -7,5 +7,9 @@ namespace IkkiuchiV2.Core.Actions {
 
         //  移動方向
         public Direction Direction { get; set; }
+
+        public override RelativePos GetMoveTo() {
+            return Direction.ToRelativePos();
+        }
     }
 }
