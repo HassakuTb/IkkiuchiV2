@@ -17,5 +17,13 @@
             if (Y >= Board.SizeY) return false;
             return true;
         }
+
+        public static bool operator ==(Pos left, Pos right) {
+            return left.X == right.X && left.Y == right.Y;
+        }
+
+        public static bool operator !=(Pos left, Pos right) {
+            return !(left == right);
+        }
     }
 }

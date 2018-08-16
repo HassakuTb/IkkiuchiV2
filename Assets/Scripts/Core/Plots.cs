@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace IkkiuchiV2.Core {
     public interface IPlots {
@@ -21,6 +22,8 @@ namespace IkkiuchiV2.Core {
         ICard MovePloted(int index);
 
         ICard ActionPloted(int index);
+
+        void OnTurnEnd(ITrash trash);
     }
 
     public class Plots : IPlots {
@@ -69,6 +72,40 @@ namespace IkkiuchiV2.Core {
 
         public ICard ActionPloted(int index) {
             return actionPlot[index];
+        }
+
+        public void OnTurnEnd(ITrash trash) {
+            //  現時点のペナルティカードを全てゴミ箱へ
+            movePenarty.Concat(actionPenarty)
+                .Where(c => c != null)
+                .Distinct()
+                .Where(c => !c.Action.IsTrump)  //  切り札は捨てない
+                .ForEach(c => {
+                    trash.TrashCard(c);
+                });
+
+            //  ペナルティをクリア
+            for(int i = 0; i < movePenarty.Length; ++i) {
+                movePenarty[i] = null;
+                actionPenarty[i] = null;
+            }
+
+            //  actionにプロットされているペナルティを反映
+            for(int i = 0; i < actionPlot.Length; ++i) {
+                if (actionPlot[i] == null) continue;
+                if (actionPlot[i].Action.PenartyMove) {
+                    movePenarty[i] = actionPlot[i];
+                }
+                if (actionPlot[i].Action.PenartyAction) {
+                    actionPenarty[i] = actionPlot[i];
+                }
+            }
+
+            //  プロットをクリア
+            for (int i = 0; i < movePlot.Length; ++i) {
+                movePlot[i] = null;
+                actionPlot[i] = null;
+            }
         }
     }
 }

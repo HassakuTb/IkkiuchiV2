@@ -76,7 +76,55 @@ namespace IkkiuchiV2.Core {
 
         //  解決
         public void Resolve() {
+            IList<IAction> p1Actions = player1.GetActualActions(rule.CountOfMoment);
+            IList<IAction> p2Actions = player2.GetActualActions(rule.CountOfMoment);
 
+            for(int i = 0; i < rule.CountOfMoment; ++i) {
+                IAction p1a = p1Actions[i];
+                IAction p2a = p2Actions[i];
+
+                //  優先度が同じとき同時に処理する
+                if(p1a.ResolveOrder == p2a.ResolveOrder) {
+                    //  移動先がぶつかるかどうかを確認する
+                    Pos p1to = player1.Gradiator.RelativePosToAbsolute(p1a.GetMoveTo());
+                    Pos p2to = player2.Gradiator.RelativePosToAbsolute(p2a.GetMoveTo());
+                    //  移動先が同じまたはp1の移動先がp2の位置かつp2の移動先がp1の位置(交差)ならば衝突としてマーク
+                    bool isCollide = p1to == p2to ||
+                        (p1to == player2.Gradiator.Position && p2to == player1.Gradiator.Position);
+
+                    p1a.Resolve(isCollide);
+                    p2a.Resolve(isCollide);
+
+                    if(player1.Life.IsDead || player2.Life.IsDead) {
+                        return; //  どちらかが死ねば終了
+                    }
+                }
+                else {
+                    IAction first = p1a.ResolveOrder < p2a.ResolveOrder ? p1a : p2a;
+                    IAction second = first == p1a ? p2a : p1a;
+
+                    first.Resolve(false);
+                    if (player1.Life.IsDead || player2.Life.IsDead) {
+                        return; //  どちらかが死ねば終了
+                    }
+
+                    second.Resolve(false);
+                    if (player1.Life.IsDead || player2.Life.IsDead) {
+                        return; //  どちらかが死ねば終了
+                    }
+
+                }
+            }
+        }
+
+        public void TurnEnd() {
+            //  プロット状態を更新
+            player1.Plots.OnTurnEnd(trash);
+            player2.Plots.OnTurnEnd(trash);
+
+            //  切り札を除く手札を捨てる
+            player1.Hand.TrashExcludeTrump(trash);
+            player2.Hand.TrashExcludeTrump(trash);
         }
     }
 }
