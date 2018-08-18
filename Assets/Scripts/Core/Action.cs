@@ -28,6 +28,12 @@ namespace IkkiuchiV2.Core {
 
         //  処理
         void Resolve(bool isCollideMove);
+
+        //  射程があるか？
+        bool HasRange { get; }
+
+        //  詳細テキストを取得
+        string GetDetailText();
     }
 
     public abstract class Action : ScriptableObject, IAction {
@@ -38,6 +44,7 @@ namespace IkkiuchiV2.Core {
         public bool penartyMove;
         public bool penartyAction;
         public bool isTrump;
+        public bool hasRange;
         
         public string ActionName {
             get {
@@ -81,6 +88,16 @@ namespace IkkiuchiV2.Core {
 
         public　virtual void Resolve(bool isCollideMove) {
             //  nop
+        }
+
+        public bool HasRange {
+            get {
+                return hasRange;
+            }
+        }
+
+        public string GetDetailText() {
+            return "";
         }
     }
 }
