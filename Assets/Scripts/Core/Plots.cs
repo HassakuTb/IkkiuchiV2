@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     public interface IPlots {
 
         //  移動をプロットする

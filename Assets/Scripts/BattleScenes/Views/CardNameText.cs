@@ -1,8 +1,8 @@
-﻿using IkkiuchiV2.Core;
+﻿using Ikkiuchi.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IkkiuchiV2.BattleScenes.Views {
+namespace Ikkiuchi.BattleScenes.Views {
     [RequireComponent(typeof(Text))]
     public class CardNameText : MonoBehaviour, ICardBindable {
 

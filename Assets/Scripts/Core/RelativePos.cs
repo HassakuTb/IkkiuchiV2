@@ -1,4 +1,4 @@
-﻿namespace IkkiuchiV2.Core {
+﻿namespace Ikkiuchi.Core {
     //  相対位置
     public struct RelativePos{
 

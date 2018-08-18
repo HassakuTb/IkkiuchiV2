@@ -1,7 +1,7 @@
-﻿using IkkiuchiV2.Core;
+﻿using Ikkiuchi.Core;
 using UnityEngine;
 
-namespace IkkiuchiV2.BattleScenes.Views {
+namespace Ikkiuchi.BattleScenes.Views {
     public class PenartyViewControl : MonoBehaviour, ICardBindable{
 
         public GameObject movePenarty;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     /// <summary>
     /// プレイヤーの駒 戦士
     /// </summary>

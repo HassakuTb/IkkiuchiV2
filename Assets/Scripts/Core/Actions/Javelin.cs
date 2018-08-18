@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  投槍
     [CreateAssetMenu(menuName = "Actions/Javelin", fileName = "Javelin")]
     public class Javelin : Damage {

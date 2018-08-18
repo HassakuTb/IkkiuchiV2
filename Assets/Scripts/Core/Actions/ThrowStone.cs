@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  投石
     [CreateAssetMenu(menuName = "Actions/ThrowStone", fileName = "ThrowStone")]
     public class ThrowStone : Damage {

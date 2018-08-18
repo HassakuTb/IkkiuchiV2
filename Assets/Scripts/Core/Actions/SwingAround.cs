@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  振り回し
     [CreateAssetMenu(menuName = "Actions/SwingAround", fileName = "SwingAround")]
     public class SwingAround : Damage {

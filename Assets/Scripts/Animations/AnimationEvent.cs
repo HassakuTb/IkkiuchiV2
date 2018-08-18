@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IkkiuchiV2.Animations {
+namespace Ikkiuchi.Animations {
     public interface IAnimationEvent {
         void Start();
         void End();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  単純ダメージ
     public abstract class Damage : Action{
 

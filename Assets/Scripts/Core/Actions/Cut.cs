@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  斬
     [CreateAssetMenu(menuName = "Actions/Cut", fileName = "Cut")]
     public class Cut : Damage {

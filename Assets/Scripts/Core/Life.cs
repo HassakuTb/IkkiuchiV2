@@ -1,5 +1,5 @@
 ﻿
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     //  ライフ
     public interface ILife {
 

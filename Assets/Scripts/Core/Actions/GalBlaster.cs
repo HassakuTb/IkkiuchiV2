@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  ガルブラスター
     [CreateAssetMenu(menuName = "Actions/GalBlaster", fileName = "GalBlaster")]
     public class GalBlaster : Damage {

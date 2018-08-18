@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     //  解決フェーズで実行する動作の基底
     public interface IAction {
 

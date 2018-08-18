@@ -1,8 +1,8 @@
-﻿using IkkiuchiV2.Core;
+﻿using Ikkiuchi.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IkkiuchiV2.BattleScenes.Views {
+namespace Ikkiuchi.BattleScenes.Views {
     [RequireComponent(typeof(Image))]
     public class CardImage : MonoBehaviour, ICardBindable {
 

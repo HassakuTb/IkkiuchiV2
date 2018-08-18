@@ -1,4 +1,4 @@
-﻿namespace IkkiuchiV2.Core {
+﻿namespace Ikkiuchi.Core {
     public class Board {
 
         public const int SizeX = 3;

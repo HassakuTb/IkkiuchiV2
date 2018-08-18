@@ -11,11 +11,6 @@ namespace Ikkiuchi.Networkings {
     public class RpcInvoker : MonoBehaviour, IRpcInvoker{
 
         [PunRPC]
-        private void RPCSetRules(int maxlife, int countOfMoment, bool enableTrump) {
-
-        }
-
-        [PunRPC]
         private void RPCSumbitMovePlot(bool isPlayer1, int[] plots) {
 
         }

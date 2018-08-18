@@ -1,6 +1,6 @@
-﻿using IkkiuchiV2.Core;
+﻿using Ikkiuchi.Core;
 
-namespace IkkiuchiV2.BattleScenes.Views {
+namespace Ikkiuchi.BattleScenes.Views {
     public interface ICardBindable {
 
         void BindCard(ICard card);

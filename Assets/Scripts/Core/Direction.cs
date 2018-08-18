@@ -1,4 +1,4 @@
-﻿namespace IkkiuchiV2.Core {
+﻿namespace Ikkiuchi.Core {
 
     //  相対方向
     public enum Direction {

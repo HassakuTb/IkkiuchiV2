@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  大突
     [CreateAssetMenu(menuName = "Actions/BigPierce", fileName = "BigPierce")]
     public class BigPierce : Damage {

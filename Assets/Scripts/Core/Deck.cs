@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     //  共通デッキ
     public interface IDeck {
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace IkkiuchiV2.Core.Actions {
+namespace Ikkiuchi.Core.Actions {
     //  狙撃
     [CreateAssetMenu(menuName = "Actions/Snipe", fileName = "Snipe")]
     public class Snipe : Damage {

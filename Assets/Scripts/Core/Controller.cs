@@ -1,7 +1,7 @@
 ﻿using RandomGen;
 using System.Collections.Generic;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
 
     //  フェーズ
     public enum Phase {

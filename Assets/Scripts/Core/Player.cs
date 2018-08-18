@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
-using IkkiuchiV2.Core.Actions;
+using Ikkiuchi.Core.Actions;
 
-namespace IkkiuchiV2.Core {
+namespace Ikkiuchi.Core {
     //  ゲームルールとしてのプレイヤー
     public interface IPlayer {
 
