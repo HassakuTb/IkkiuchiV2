@@ -1,9 +1,9 @@
 ﻿using UI;
 using UnityEngine;
-using UnityEngine.UI;
 using UniRx;
 using Zenject;
 using Ikkiuchi.TitleScenes.ViewModels;
+using System;
 
 namespace Ikkiuchi.TitleScenes.Views {
     [RequireComponent(typeof(LongClickFillButton))]
@@ -32,10 +32,13 @@ namespace Ikkiuchi.TitleScenes.Views {
 
         public void OnCreatedRoom() {
             Debug.Log("Room Created");
+
             var prop = new ExitGames.Client.Photon.Hashtable();
+
             prop.Add("CountOfMoment", model.MomentCount);
             prop.Add("MaxLife", model.MaxLife);
             prop.Add("EnableTrump", model.IsEnabledTrump);
+            prop.Add("Seed", (uint)Environment.TickCount);
 
             PhotonNetwork.room.SetCustomProperties(prop);
 

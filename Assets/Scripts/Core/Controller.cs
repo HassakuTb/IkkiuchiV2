@@ -1,10 +1,13 @@
 ﻿using RandomGen;
 using System.Collections.Generic;
+using Zenject;
 
 namespace Ikkiuchi.Core {
 
     //  フェーズ
     public enum Phase {
+        None,
+        Start,
         TurnStart,  //  ターン開始
         MovePlot,   //  移動プロット
         ActionPlot, //  行動プロット
@@ -15,7 +18,7 @@ namespace Ikkiuchi.Core {
 
     public class Controller {
 
-        private IRule rule; //  TODO:   inject
+        [Inject] private IRule rule;
 
         private IPlayer player1;
         private IPlayer player2;
@@ -24,16 +27,21 @@ namespace Ikkiuchi.Core {
         private IDeck deck;
         private ITrash trash;
 
-        private Phase currentPhase;
+        public Phase CurrentPhase { get; set; } = Phase.None;
         private bool isP1MovePlotted;
         private bool isP2MovePlotted;
         private bool isP1ActionPlotted;
         private bool isP2ActionPlotted;
 
-        private RandomGenerator randGen;   //  TODO:   inject
+        [Inject] private RandomGenerator randGen;
+
+        public void SetSeed(uint seed) {
+            randGen.Seed = seed;
+        }
 
         //  ボードを作成する
         public void MakeBoard() {
+            CurrentPhase = Phase.Start;
 
             player1 = new Player(true, rule);
             player2 = new Player(false, rule);
@@ -44,8 +52,6 @@ namespace Ikkiuchi.Core {
 
             deck.AppendCards(cardSet.EnumerateNormalCards().Shuffle(randGen));
             deck.AppendTrumps(cardSet.EnumerateTrumps().Shuffle(randGen));
-
-            currentPhase = Phase.TurnStart;
         }
 
         //  カードを配る
@@ -75,7 +81,7 @@ namespace Ikkiuchi.Core {
             isP1ActionPlotted = false;
             isP2ActionPlotted = false;
 
-            currentPhase = Phase.MovePlot;
+            CurrentPhase = Phase.MovePlot;
         }
 
         //  移動プロット
@@ -94,7 +100,7 @@ namespace Ikkiuchi.Core {
             }
 
             if(isP1MovePlotted && isP2MovePlotted) {
-                currentPhase = Phase.ActionPlot;
+                CurrentPhase = Phase.ActionPlot;
             }
         }
 
@@ -114,7 +120,7 @@ namespace Ikkiuchi.Core {
             }
 
             if (isP1ActionPlotted && isP2ActionPlotted) {
-                currentPhase = Phase.Resolve;
+                CurrentPhase = Phase.Resolve;
             }
         }
 
@@ -140,7 +146,7 @@ namespace Ikkiuchi.Core {
                     p2a.Resolve(isCollide);
 
                     if(player1.Life.IsDead || player2.Life.IsDead) {
-                        currentPhase = Phase.Settle;
+                        CurrentPhase = Phase.Settle;
                         return; //  どちらかが死ねば終了
                     }
                 }
@@ -150,13 +156,13 @@ namespace Ikkiuchi.Core {
 
                     first.Resolve(false);
                     if (player1.Life.IsDead || player2.Life.IsDead) {
-                        currentPhase = Phase.Settle;
+                        CurrentPhase = Phase.Settle;
                         return; //  どちらかが死ねば終了
                     }
 
                     second.Resolve(false);
                     if (player1.Life.IsDead || player2.Life.IsDead) {
-                        currentPhase = Phase.Settle;
+                        CurrentPhase = Phase.Settle;
                         return; //  どちらかが死ねば終了
                     }
 
@@ -173,7 +179,7 @@ namespace Ikkiuchi.Core {
             player1.Hand.TrashExcludeTrump(trash);
             player2.Hand.TrashExcludeTrump(trash);
 
-            currentPhase = Phase.TurnStart;
+            CurrentPhase = Phase.TurnStart;
         }
     }
 }

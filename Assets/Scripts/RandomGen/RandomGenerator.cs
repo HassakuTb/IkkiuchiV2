@@ -30,48 +30,47 @@ namespace RandomGen {
         }
 
 
+    }
 
-        ///    Random value generator uisng XorShift algorithm
-        ///    周期2^128版
-        ///
-        ///    paper
-        ///    http://www.jstatsoft.org/v08/i14/paper
-        ///
-        [Serializable]
-        public class XorShift128 : RandomGenerator {
+    ///    Random value generator uisng XorShift algorithm
+    ///    周期2^128版
+    ///
+    ///    paper
+    ///    http://www.jstatsoft.org/v08/i14/paper
+    ///
+    [Serializable]
+    public class XorShift128 : RandomGenerator {
 
-            private uint grandSeed;
-            private uint[] seed = new uint[4];
+        private uint grandSeed;
+        private uint[] seed = new uint[4];
 
-            public XorShift128() : this(0U) {
-            }
+        public XorShift128() : this(0U) {
+        }
 
-            public XorShift128(uint seed) {
-                Seed = seed;
-            }
+        public XorShift128(uint seed) {
+            Seed = seed;
+        }
 
-            public override uint Seed {
-                get { return this.grandSeed; }
-                set {
-                    this.grandSeed = value;
-                    for (uint i = 0; i < 4; ++i) {
-                        seed[i] = value = 1812433253U * (value ^ (value >> 30)) + i + 1;
-                    }
+        public override uint Seed {
+            get { return this.grandSeed; }
+            set {
+                this.grandSeed = value;
+                for (uint i = 0; i < 4; ++i) {
+                    seed[i] = value = 1812433253U * (value ^ (value >> 30)) + i + 1;
                 }
             }
+        }
 
-            public override uint GetUint() {
-                uint t, w;
-                t = seed[0];
-                seed[0] = seed[1];
-                seed[1] = seed[2];
-                seed[2] = w = seed[3];
-                t = t ^ (t << 11);
-                w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));
-                seed[3] = w;
-                return w;
-            }
-
+        public override uint GetUint() {
+            uint t, w;
+            t = seed[0];
+            seed[0] = seed[1];
+            seed[1] = seed[2];
+            seed[2] = w = seed[3];
+            t = t ^ (t << 11);
+            w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));
+            seed[3] = w;
+            return w;
         }
 
     }
