@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5837feacf9578a64c93288913a161011, type: 3}
+  m_Name: Issen
+  m_EditorClassIdentifier: 
+  actionName: "\u5207\u672D\u3000\u4E00\u9583"
+  cardImage: {fileID: 21300038, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
+  penartyMove: 1
+  penartyAction: 0
+  isTrump: 1
+  hasRange: 1
+  hasRapidAttack: 1
+  hasCounter: 0
+  hasActionAttack: 0

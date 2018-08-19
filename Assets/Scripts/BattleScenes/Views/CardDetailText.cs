@@ -8,7 +8,8 @@ namespace Ikkiuchi.BattleScenes.Views {
     public class CardDetailText : MonoBehaviour, ICardBindable {
 
         public void BindCard(ICard card) {
-            GetComponent<Text>().text = card.Action.GetDetailText();
+            if (card == null) GetComponent<Text>().text = "";
+            else GetComponent<Text>().text = card.Action.GetDetailText();
         }
     }
 }

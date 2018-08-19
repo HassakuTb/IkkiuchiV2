@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f303321753b34b40a36afd6c622e11a, type: 3}
   m_Name: SaimenPress
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u30D7\u30EC\u30B9"
   cardImage: {fileID: 21300004, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
-  penartyMove: 0
+  penartyMove: 1
   penartyAction: 0
-  damageValue: 0
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
+  damageValue: 5

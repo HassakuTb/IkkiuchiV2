@@ -11,7 +11,7 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public void BindCard(ICard card) {
             RectTransform rect = GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(card.Action.HasRange ? sizeSmall : sizeLarge, rect.sizeDelta.y);
+            rect.sizeDelta = new Vector2(card != null && card.Action.HasRange ? sizeSmall : sizeLarge, rect.sizeDelta.y);
         }
     }
 }

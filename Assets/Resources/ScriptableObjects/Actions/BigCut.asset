@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bbb94a83399cb847b24ac0c2c05143b, type: 3}
   m_Name: BigCut
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u5927\u65AC\u6483"
   cardImage: {fileID: 21300002, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
   penartyMove: 0
-  penartyAction: 0
-  damageValue: 0
+  penartyAction: 1
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
+  damageValue: 2

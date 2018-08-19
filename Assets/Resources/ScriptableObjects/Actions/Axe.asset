@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6013fafb51017c84d9e7341923b37756, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u65A7"
   cardImage: {fileID: 21300012, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
   penartyMove: 0
-  penartyAction: 0
+  penartyAction: 1
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
   damageValue: 3

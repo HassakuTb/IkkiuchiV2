@@ -13,6 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionName: 
   cardImage: {fileID: 0}
-  resolveOrder: 0
+  resolveOrder: -1000
   penartyMove: 0
   penartyAction: 0
+  isTrump: 0
+  hasRange: 0

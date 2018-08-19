@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f012d8b10f421fa438740cb4fb28f405, type: 3}
   m_Name: Pierce
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u523A\u7A81"
   cardImage: {fileID: 21300006, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
   penartyMove: 0
   penartyAction: 0
-  damageValue: 0
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
+  damageValue: 1

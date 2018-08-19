@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65a14355f215e5b4e8431c07d0833adb, type: 3}
   m_Name: GalBlaster
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u8599\u5200"
   cardImage: {fileID: 21300036, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
   penartyMove: 0
-  penartyAction: 0
-  damageValue: 0
+  penartyAction: 1
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
+  damageValue: 2

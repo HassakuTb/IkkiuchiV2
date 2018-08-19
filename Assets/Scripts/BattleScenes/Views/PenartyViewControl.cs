@@ -8,8 +8,8 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject actionPenarty;
 
         public void BindCard(ICard card) {
-            movePenarty.SetActive(card.Action.PenartyMove);
-            actionPenarty.SetActive(card.Action.PenartyAction);
+            movePenarty.SetActive(card != null && card.Action.PenartyMove);
+            actionPenarty.SetActive(card != null && card.Action.PenartyAction);
         }
     }
 }

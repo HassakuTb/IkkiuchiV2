@@ -11,9 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedef76438e18e34697473d861b6d06f, type: 3}
   m_Name: Snipe
   m_EditorClassIdentifier: 
-  actionName: 
+  actionName: "\u72D9\u6483"
   cardImage: {fileID: 21300024, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
-  resolveOrder: 0
-  penartyMove: 0
-  penartyAction: 0
-  damageValue: 0
+  penartyMove: 1
+  penartyAction: 1
+  isTrump: 0
+  hasRange: 1
+  hasRapidAttack: 0
+  hasCounter: 0
+  hasActionAttack: 1
+  damageValue: 1

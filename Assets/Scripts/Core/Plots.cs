@@ -10,6 +10,9 @@ namespace Ikkiuchi.Core {
         //  行動をプロットする
         void PlotAction(int index, ICard card);
 
+        ICard GetMovePlot(int index);
+        ICard GetActionPlot(int index);
+
 
         bool IsMovePenarized(int index);
 
@@ -106,6 +109,14 @@ namespace Ikkiuchi.Core {
                 movePlot[i] = null;
                 actionPlot[i] = null;
             }
+        }
+
+        public ICard GetMovePlot(int index) {
+            return movePlot[index];
+        }
+
+        public ICard GetActionPlot(int index) {
+            return actionPlot[index];
         }
     }
 }

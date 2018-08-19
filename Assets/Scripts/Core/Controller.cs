@@ -1,5 +1,7 @@
 ﻿using RandomGen;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Zenject;
 
 namespace Ikkiuchi.Core {
@@ -8,11 +10,9 @@ namespace Ikkiuchi.Core {
     public enum Phase {
         None,
         Start,
-        TurnStart,  //  ターン開始
         MovePlot,   //  移動プロット
         ActionPlot, //  行動プロット
         Resolve,    //  解決
-        TurnEnd,    //  ターン終了
         Settle, //  決着
     }
 
@@ -20,8 +20,8 @@ namespace Ikkiuchi.Core {
 
         [Inject] private IRule rule;
 
-        private IPlayer player1;
-        private IPlayer player2;
+        public IPlayer Player1 { get; set; }
+        public IPlayer Player2 { get; set; }
 
         private ICardSet cardSet;
         private IDeck deck;
@@ -33,6 +33,8 @@ namespace Ikkiuchi.Core {
         private bool isP1ActionPlotted;
         private bool isP2ActionPlotted;
 
+        public IPlayer MyPlayer { get; set; }
+
         [Inject] private RandomGenerator randGen;
 
         public void SetSeed(uint seed) {
@@ -40,19 +42,28 @@ namespace Ikkiuchi.Core {
         }
 
         //  ボードを作成する
-        public void MakeBoard() {
+        public void MakeBoard(bool isPlayer1) {
             CurrentPhase = Phase.Start;
 
-            player1 = new Player(true, rule);
-            player2 = new Player(false, rule);
+            Player1 = new Player(true, rule);
+            Player2 = new Player(false, rule);
 
-            cardSet = new CardSet.Factory().CreateClassic();
+            cardSet = new CardSet.Factory(this).CreateClassic();
             deck = new Deck();
             trash = new Trash();
 
             deck.AppendCards(cardSet.EnumerateNormalCards().Shuffle(randGen));
             deck.AppendTrumps(cardSet.EnumerateTrumps().Shuffle(randGen));
+
+            MyPlayer = isPlayer1 ? Player1 : Player2;
         }
+
+        public IPlayer EnemyPlayer {
+            get {
+                return MyPlayer == Player1 ? Player2 : Player1;
+            }
+        }
+
 
         //  カードを配る
         public void DealCards() {
@@ -60,20 +71,20 @@ namespace Ikkiuchi.Core {
 
             //  切り札をドロー
             if (rule.IsEnableTrump) {
-                player1.DrawTrump(deck);
-                player2.DrawTrump(deck);
+                Player1.DrawTrump(deck);
+                Player2.DrawTrump(deck);
             }
 
             //  両プレイヤーの手札がMaxになるまで交互にドローする
-            IPlayer targetPlayer = player1;
-            while (player1.Hand.Cards.Count < handMax || player2.Hand.Cards.Count < handMax) {
+            IPlayer targetPlayer = Player1;
+            while (Player1.Hand.Cards.Count < handMax || Player2.Hand.Cards.Count < handMax) {
 
                 if (deck.IsEmpty()) {   //  デッキが空になったらtrashから全部取り出してシャッフルしてデッキにする
                     deck.AppendCards(trash.Remove().Shuffle(randGen));
                 }
                 targetPlayer.Hand.Cards.Add(deck.Deal());
 
-                targetPlayer = targetPlayer == player1 ? player2 : player1;
+                targetPlayer = targetPlayer == Player1 ? Player2 : Player1;
             }
 
             isP1MovePlotted = false;
@@ -92,7 +103,9 @@ namespace Ikkiuchi.Core {
                 player.Plots.PlotMove(i, cardSet.GetCard(plots[i]));
             }
 
-            if(player == player1) {
+            player.Hand.RemoveCards(plots.Where(id => id != -1));
+
+            if(player == Player1) {
                 isP1MovePlotted = true;
             }
             else {
@@ -112,7 +125,9 @@ namespace Ikkiuchi.Core {
                 player.Plots.PlotAction(i, cardSet.GetCard(plots[i]));
             }
 
-            if (player == player1) {
+            player.Hand.RemoveCards(plots.Where(id => id != -1));
+
+            if (player == Player1) {
                 isP1ActionPlotted = true;
             }
             else {
@@ -124,62 +139,330 @@ namespace Ikkiuchi.Core {
             }
         }
 
-        //  解決
-        public void Resolve() {
-            IList<IAction> p1Actions = player1.GetActualActions(rule.CountOfMoment);
-            IList<IAction> p2Actions = player2.GetActualActions(rule.CountOfMoment);
+        private IEnumerator ResolveRapidAttack(IAction p1a, IAction p2a, int momentIndex) {
+            if (p1a.HasRapidAttack()) {
+                if(p1a.ResolveRapidAttack(momentIndex,Player1) == 0) {
+                    //  miss
+                }
+                else {
+                    // damage
+                }
+            }
 
-            for(int i = 0; i < rule.CountOfMoment; ++i) {
-                IAction p1a = p1Actions[i];
-                IAction p2a = p2Actions[i];
+            if (p2a.HasRapidAttack()) {
+                if(p2a.ResolveRapidAttack(momentIndex,Player2) == 0) {
+                    //  miss
+                }
+                else {
+                    //  damage
+                }
+            }
+            yield return null;
+            //  モデル更新
+            Player1.Life.DealDamage(p2a.ResolveRapidAttack(momentIndex,Player2));
+            Player2.Life.DealDamage(p1a.ResolveRapidAttack(momentIndex,Player1));
 
-                //  優先度が同じとき同時に処理する
-                if(p1a.ResolveOrder == p2a.ResolveOrder) {
-                    //  移動先がぶつかるかどうかを確認する
-                    Pos p1to = player1.Gradiator.RelativePosToAbsolute(p1a.GetMoveTo());
-                    Pos p2to = player2.Gradiator.RelativePosToAbsolute(p2a.GetMoveTo());
-                    //  移動先が同じまたはp1の移動先がp2の位置かつp2の移動先がp1の位置(交差)ならば衝突としてマーク
-                    bool isCollide = p1to == p2to ||
-                        (p1to == player2.Gradiator.Position && p2to == player1.Gradiator.Position);
+            yield return null;
+        }
 
-                    p1a.Resolve(isCollide);
-                    p2a.Resolve(isCollide);
+        private IEnumerator ResolveCounter(IAction p1a, IAction p2a, int momentIndex) {
+            if (p1a.HasCounter()) {
 
-                    if(player1.Life.IsDead || player2.Life.IsDead) {
-                        CurrentPhase = Phase.Settle;
-                        return; //  どちらかが死ねば終了
+            }
+            if (p2a.HasCounter()) {
+
+            }
+            yield return null;
+            p1a.ResolveCounter(momentIndex,Player1);
+            p2a.ResolveCounter(momentIndex,Player2);
+
+            yield return null;
+        }
+
+
+
+        private IEnumerator ResolveMove(Pos p1to, Pos p2to) {
+
+            bool p1Move = p1to != Player1.Gradiator.Position;
+            bool p2Move = p2to != Player2.Gradiator.Position;
+            if (p1Move && p2Move) {
+                //  両方移動するとき
+                //  移動先が同じまたはp1の移動先がp2の位置かつp2の移動先がp1の位置(交差)ならば衝突としてマーク
+                bool isCollide = p1to == p2to ||
+                    (p1to == Player2.Gradiator.Position && p2to == Player1.Gradiator.Position);
+
+                if (!isCollide) {
+                    //  アニメーション
+                    if (p1to.IsInboundBoard()) {
+
+                    }
+                    else {
+                        //  画面外移動
+                    }
+
+                    if (p2to.IsInboundBoard()) {
+
+                    }
+                    else {
+                        //  画面外移動
                     }
                 }
                 else {
-                    IAction first = p1a.ResolveOrder < p2a.ResolveOrder ? p1a : p2a;
-                    IAction second = first == p1a ? p2a : p1a;
-
-                    first.Resolve(false);
-                    if (player1.Life.IsDead || player2.Life.IsDead) {
-                        CurrentPhase = Phase.Settle;
-                        return; //  どちらかが死ねば終了
+                    //  衝突しないときのアニメーション
+                }
+                //  アニメーション実行
+                yield return null;
+                //  モデル更新
+                if (!isCollide) {
+                    //  衝突しないとき
+                    if (!p1to.IsInboundBoard()) {
+                        Player1.Life.DealDamage(1);
                     }
-
-                    second.Resolve(false);
-                    if (player1.Life.IsDead || player2.Life.IsDead) {
-                        CurrentPhase = Phase.Settle;
-                        return; //  どちらかが死ねば終了
+                    else {
+                        Player1.Gradiator.Position = p1to;
+                    }
+                    //  衝突しないとき
+                    if (!p2to.IsInboundBoard()) {
+                        Player2.Life.DealDamage(1);
+                    }
+                    else {
+                        Player2.Gradiator.Position = p2to;
+                    }
+                }
+            }
+            else if (p1Move) {
+                //  p1のみ移動するとき
+                if (p1to == p2to) {  //  P2を押し込む場合
+                    RelativePos relative = new RelativePos(p2to.X - p1to.X, p2to.Y - p1to.Y);
+                    if (new Pos(Player2.Gradiator.Position.X + relative.X, Player2.Gradiator.Position.Y + relative.Y).IsInboundBoard()) {   //  押し込み可能
+                        //  アニメーション
+                        yield return null;
+                        //  モデル更新
+                        Player1.Gradiator.Position = p1to;
+                        Player2.Gradiator.Position = new Pos(Player2.Gradiator.Position.X + relative.X, Player2.Gradiator.Position.Y + relative.Y);
+                    }
+                    else {  //  後が無い
+                        //  アニメーション
+                        yield return null;
+                        //  モデル更新
+                        Player2.Life.DealDamage(1);
                     }
 
                 }
+                else {  //  通常移動
+                    //  アニメーション
+                    yield return null;
+                    //  モデル更新
+                    if (p1to.IsInboundBoard()) {
+                        Player1.Gradiator.Position = p1to;
+                    }
+                    else {
+                        Player1.Life.DealDamage(1);
+                    }
+                }
+            }
+            else if (p2Move) {
+                //  p2のみ移動するとき
+                if (p1to == p2to) {  //  P1を押し込む場合
+                    RelativePos relative = new RelativePos(p1to.X - p2to.X, p1to.Y - p2to.Y);
+                    if (new Pos(Player1.Gradiator.Position.X + relative.X, Player1.Gradiator.Position.Y + relative.Y).IsInboundBoard()) {   //  押し込み可能
+                        //  アニメーション
+                        yield return null;
+                        //  モデル更新
+                        Player2.Gradiator.Position = p2to;
+                        Player1.Gradiator.Position = new Pos(Player1.Gradiator.Position.X + relative.X, Player1.Gradiator.Position.Y + relative.Y);
+                    }
+                    else {  //  後が無い
+                        //  アニメーション
+                        yield return null;
+                        //  モデル更新
+                        Player1.Life.DealDamage(1);
+                    }
+
+                }
+                else {  //  通常移動
+                    //  アニメーション
+                    yield return null;
+                    //  モデル更新
+                    if (p1to.IsInboundBoard()) {
+                        Player2.Gradiator.Position = p2to;
+                    }
+                    else {
+                        Player2.Life.DealDamage(1);
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+
+        private IEnumerator ResolveActionAttack(IAction p1a, IAction p2a, int momentIndex) {
+            if (p1a.HasActionAttack()) {
+                if (p1a.ResolveDamage(momentIndex,Player1) == 0) {
+                    //  miss
+                }
+                else {
+                    if (Player2.BigCounter) {
+
+                    }
+                    else {
+                        // damage
+
+                    }
+                    if (Player2.Cotton) {
+
+                    }
+                    if (Player2.Counter) {
+
+                    }
+                }
+            }
+
+            if (p2a.HasActionAttack()) {
+                if (p2a.ResolveDamage(momentIndex,Player2) == 0) {
+                    //  miss
+                }
+                else {
+                    if (Player1.BigCounter) {
+
+                    }
+                    else {
+                        // damage
+
+                    }
+                    if (Player1.Cotton) {
+
+                    }
+                    if (Player1.Counter) {
+
+                    }
+                }
+            }
+            yield return null;
+            //  モデル更新
+            if (p1a.HasActionAttack()) {
+
+                if (Player2.BigCounter) {
+                    Player1.Life.DealDamage(p1a.ResolveDamage(momentIndex,Player1) * 2);
+                }
+                else {
+                    // damage
+                    Player2.Life.DealDamage(p1a.ResolveDamage(momentIndex,Player1));
+                }
+                if (Player2.Cotton) {
+                    Player2.Life.DealDamage(-1);
+                }
+                if (Player2.Counter) {
+                    Player1.Life.DealDamage(p1a.ResolveDamage(momentIndex,Player1));
+                }
+            }
+
+            if (p2a.HasActionAttack()) {
+                if (Player1.BigCounter) {
+                    Player2.Life.DealDamage(p2a.ResolveDamage(momentIndex,Player2) * 2);
+                }
+                else {
+                    // damage
+                    Player1.Life.DealDamage(p2a.ResolveDamage(momentIndex,Player2));
+                }
+                if (Player1.Cotton) {
+                    Player1.Life.DealDamage(-1);
+                }
+                if (Player1.Counter) {
+                    Player2.Life.DealDamage(p2a.ResolveDamage(momentIndex,Player2));
+                }
+            }
+
+            yield return null;
+        }
+
+        private bool IsSettled() {
+            return Player1.Life.IsDead || Player2.Life.IsDead;
+        }
+
+        //  解決
+        public IEnumerator Resolve() {
+            while (true) {
+
+                IList<IAction> p1Actions = Player1.GetActualActions(rule.CountOfMoment, this);
+                IList<IAction> p2Actions = Player2.GetActualActions(rule.CountOfMoment, this);
+
+                for (int i = 0; i < rule.CountOfMoment; ++i) {
+                    IAction p1a = p1Actions[i];
+                    IAction p2a = p2Actions[i];
+
+                    //  カウンター状態のクリア
+                    Player1.Cotton = false;
+                    Player1.BigCounter = false;
+                    Player1.Counter = false;
+                    Player2.Cotton = false;
+                    Player2.BigCounter = false;
+                    Player2.Counter = false;
+
+                    //  先制移動処理
+                    yield return ResolveMove(p1a.ExpectedRapidMove(i, Player1), p2a.ExpectedRapidMove(i, Player2));
+
+                    //  決着判定
+                    if (IsSettled()) {
+                        CurrentPhase = Phase.Settle;
+                        yield return null;
+                    }
+
+                    //  先制攻撃処理
+                    yield return ResolveRapidAttack(p1a, p2a, i);
+
+                    //  決着判定
+                    if (IsSettled()) {
+                        CurrentPhase = Phase.Settle;
+                        yield return null;
+                    }
+
+                    yield return ResolveCounter(p1a, p2a, i);
+                    yield return ResolveActionAttack(p1a, p2a, i);
+
+                    //  決着判定
+                    if (IsSettled()) {
+                        CurrentPhase = Phase.Settle;
+                        yield return null;
+                    }
+
+                    //  後手移動処理
+                    yield return ResolveMove(
+                        Player1.Gradiator.RelativePosToAbsolute(p1a.ExpectedActionMove(i, Player1).ToRelativePos()),
+                        Player2.Gradiator.RelativePosToAbsolute(p2a.ExpectedActionMove(i, Player2).ToRelativePos()));
+
+                    //  決着判定
+                    if (IsSettled()) {
+                        CurrentPhase = Phase.Settle;
+                        yield return null;
+                    }
+
+                    //  相手移動処理
+                    yield return ResolveMove(p1a.ExpectedEnemyMove(i, Player1), p2a.ExpectedEnemyMove(i, Player2));
+
+                    //  決着判定
+                    if (IsSettled()) {
+                        CurrentPhase = Phase.Settle;
+                        yield return null;
+                    }
+
+                }
+
+                TurnEnd();
+                DealCards();
+                yield return null;
             }
         }
 
         public void TurnEnd() {
             //  プロット状態を更新
-            player1.Plots.OnTurnEnd(trash);
-            player2.Plots.OnTurnEnd(trash);
+            Player1.Plots.OnTurnEnd(trash);
+            Player2.Plots.OnTurnEnd(trash);
 
             //  切り札を除く手札を捨てる
-            player1.Hand.TrashExcludeTrump(trash);
-            player2.Hand.TrashExcludeTrump(trash);
-
-            CurrentPhase = Phase.TurnStart;
+            Player1.Hand.TrashExcludeTrump(trash);
+            Player2.Hand.TrashExcludeTrump(trash);
         }
     }
 }

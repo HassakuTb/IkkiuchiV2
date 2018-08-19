@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Ikkiuchi.Core.Actions {
     //  何もしない
-    [CreateAssetMenu(menuName = "Actions/Pierce", fileName = "Pierce")]
+    [CreateAssetMenu(menuName = "Actions/NoAction", fileName = "NoAction")]
     public class NoAction : Action{
     }
 }

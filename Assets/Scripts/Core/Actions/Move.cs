@@ -8,8 +8,8 @@ namespace Ikkiuchi.Core.Actions {
         //  移動方向
         public Direction Direction { get; set; }
 
-        public override RelativePos GetMoveTo() {
-            return Direction.ToRelativePos();
+        public override Pos ExpectedRapidMove(int momentIndex, IPlayer player) {
+            return player.Gradiator.RelativePosToAbsolute(Direction.ToRelativePos());
         }
     }
 }
