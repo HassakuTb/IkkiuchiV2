@@ -13,8 +13,8 @@
     }
 
     public class Rule : IRule{
-        public int MaxLife { get; set; } = 8;
-        public int CountOfMoment { get; set; } = 3;
+        public int MaxLife { get; set; } = 10;
+        public int CountOfMoment { get; set; } = 5;
         public bool IsEnableTrump { get; set; } = true;
     }
 }
