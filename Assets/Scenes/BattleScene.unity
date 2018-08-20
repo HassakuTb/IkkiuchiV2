@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -39,7 +39,6 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
-  m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -55,10 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
-    m_AtlasSize: 1024
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
     m_AO: 0
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
@@ -1622,6 +1622,51 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 261996993}
+--- !u!1 &268677193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 268677194}
+  - component: {fileID: 268677195}
+  m_Layer: 0
+  m_Name: DraggingContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &268677194
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 268677193}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 372380109}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &268677195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 268677193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a0728f42c3cf24ab205ca70f26c227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &275355924
 GameObject:
   m_ObjectHideFlags: 0
@@ -2281,6 +2326,7 @@ RectTransform:
   m_Children:
   - {fileID: 968208551}
   - {fileID: 96723542}
+  - {fileID: 268677194}
   m_Father: {fileID: 365449803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2366,51 +2412,36 @@ MonoBehaviour:
   slideS:
     serializedVersion: 2
     m_Curve:
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0
       value: 0
       inSlope: 5.192307
       outSlope: 5.192307
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.10981157
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0.19934753
       value: 0.4988333
       inSlope: 0.04124514
       outSlope: 0.04124514
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.6117926
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0.49326923
       value: 0.49326926
       inSlope: 0.031196281
       outSlope: 0.031196281
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3749188
-      outWeight: 0.33333334
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 0.8400237
       value: 0.49643448
       inSlope: 0.016649906
       outSlope: 0.016649906
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.68970877
-      outWeight: 1
-    - serializedVersion: 3
+    - serializedVersion: 2
       time: 1
       value: 1
       inSlope: 6.9999967
       outSlope: 6.9999967
       tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.23440987
-      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -6113,7 +6144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7738,13 +7769,14 @@ GameObject:
   - component: {fileID: 1069030045}
   - component: {fileID: 1069030047}
   - component: {fileID: 1069030046}
+  - component: {fileID: 1069030048}
   m_Layer: 0
   m_Name: SubmitButtonMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1069030045
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7798,6 +7830,24 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1069030044}
+--- !u!114 &1069030048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1069030044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31e81d8ff1814f347a022e6e584787e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  longClickTime: 1
+  onLongClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  fillImage: {fileID: 447682909}
 --- !u!1 &1088567563
 GameObject:
   m_ObjectHideFlags: 0
@@ -8510,7 +8560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1200498356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13178,6 +13228,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 1796260520896092, guid: 29a229ac51dbb6a4fb395e0c2c65b948, type: 2}
   detailRoot: {fileID: 1341409818}
+  draggingContainer: {fileID: 268677193}
+  draggingArrowPrefab: {fileID: 1199021110030552, guid: d08b1b25d11c5f54687be5f2c74120de,
+    type: 2}
+  draggingActionPrefab: {fileID: 0}
 --- !u!1 &1931631619
 GameObject:
   m_ObjectHideFlags: 0

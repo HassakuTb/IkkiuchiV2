@@ -38,7 +38,7 @@ namespace Ikkiuchi.TitleScenes.Views {
             prop.Add("CountOfMoment", model.MomentCount);
             prop.Add("MaxLife", model.MaxLife);
             prop.Add("EnableTrump", model.IsEnabledTrump);
-            prop.Add("Seed", (uint)Environment.TickCount);
+            prop.Add("Seed", Environment.TickCount);
 
             PhotonNetwork.room.SetCustomProperties(prop);
 

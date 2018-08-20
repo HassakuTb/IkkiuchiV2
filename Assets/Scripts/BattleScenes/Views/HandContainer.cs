@@ -8,7 +8,11 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public GameObject cardPrefab;
         public GameObject detailRoot;
-        
+        public GameObject draggingContainer;
+
+        public GameObject draggingArrowPrefab;
+        public GameObject draggingActionPrefab;
+
         [Inject] private Controller controller;
 
         private void Start() {
@@ -33,6 +37,9 @@ namespace Ikkiuchi.BattleScenes.Views {
                     cb.BindCard(card);
                 });
                 elm.GetComponent<Card>().DetailRoot = detailRoot;
+                elm.GetComponent<Card>().DraggingContainer = draggingContainer;
+                elm.GetComponent<Card>().DraggingArrowPrefab = draggingArrowPrefab;
+                elm.GetComponent<Card>().DraggingActionPrefab = draggingActionPrefab;
                 elm.transform.SetParent(transform, false);
                 elm.GetComponent<RectTransform>().SetAsLastSibling();
             });
