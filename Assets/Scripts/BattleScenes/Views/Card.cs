@@ -14,6 +14,40 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         private GameObject dragging;
 
+        private const float animationDelta = 15f;
+        private float animationTargetH;
+        private float animationBaseH;
+        private bool isSelected = false;
+
+        private bool isInitialized = false;
+
+        private void Update() {
+            if (!isInitialized) {
+                animationBaseH = GetComponent<RectTransform>().sizeDelta.y;
+                animationTargetH = animationBaseH + animationDelta;
+
+                isInitialized = true;
+            }
+            
+            RectTransform rect = GetComponent<RectTransform>();
+            if (isSelected) {
+                if(rect.sizeDelta.y < animationTargetH) {
+                    rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + 3f);
+                }
+                else {
+                    rect.sizeDelta = new Vector2(rect.sizeDelta.x, animationTargetH);
+                }
+            }
+            else {
+                if (rect.sizeDelta.y > animationBaseH) {
+                    rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y - 3f);
+                }
+                else {
+                    rect.sizeDelta = new Vector2(rect.sizeDelta.x, animationBaseH);
+                }
+            }
+        }
+
         public void BindCard(ICard card) {
             this.card = card;
         }
@@ -41,12 +75,16 @@ namespace Ikkiuchi.BattleScenes.Views {
             DetailRoot.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                 cb.BindCard(card);
             });
+
+            isSelected = true;
         }
 
         public void OnPointerExit(PointerEventData eventData) {
             DetailRoot.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                 cb.BindCard(null);
             });
+
+            isSelected = false;
         }
 
     }

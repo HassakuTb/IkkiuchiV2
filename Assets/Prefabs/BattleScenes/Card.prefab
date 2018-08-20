@@ -75,9 +75,6 @@ GameObject:
   - component: {fileID: 222911772669086302}
   - component: {fileID: 114491079662710858}
   - component: {fileID: 114234247760785348}
-  - component: {fileID: 114180487547890050}
-  - component: {fileID: 114134429086985188}
-  - component: {fileID: 114639351125110368}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -85,40 +82,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114134429086985188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1796260520896092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _installers:
-  - {fileID: 114639351125110368}
-  _installerPrefabs: []
-  _scriptableObjectInstallers: []
-  _autoRun: 1
-  _kernel: {fileID: 0}
---- !u!114 &114180487547890050
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1796260520896092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _components:
-  - {fileID: 114234247760785348}
-  _identifier: 
-  _useSceneContext: 0
-  _context: {fileID: 114134429086985188}
-  _bindType: 0
 --- !u!114 &114234247760785348
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,17 +156,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d491f0b252201e045858dabec0ab0437, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114639351125110368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1796260520896092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60b32a39a332b8240a5bed94a533bd41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114740831263176278
@@ -333,7 +285,7 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224849050823324050
 RectTransform:
   m_ObjectHideFlags: 1
@@ -365,8 +317,8 @@ RectTransform:
   m_Father: {fileID: 224362600255342478}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 25}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -125}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
