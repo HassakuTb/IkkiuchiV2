@@ -17,7 +17,7 @@ namespace Ikkiuchi.TitleScenes {
                 windowState.State = WindowStateEnum.None;
 
                 var prop = PhotonNetwork.room.CustomProperties;
-                rule.CountOfMoment = (int)prop["CountOfMoment"];
+                rule.CountOfMoment.Value = (int)prop["CountOfMoment"];
                 rule.IsEnableTrump = (bool)prop["EnableTrump"];
                 rule.MaxLife = (int)prop["MaxLife"];
                 controller.SetSeed((uint)prop["Seed"]);
@@ -32,7 +32,7 @@ namespace Ikkiuchi.TitleScenes {
                 windowState.State = WindowStateEnum.None;
 
                 var prop = PhotonNetwork.room.CustomProperties;
-                rule.CountOfMoment = (int)prop["CountOfMoment"];
+                rule.CountOfMoment.Value = (int)prop["CountOfMoment"];
                 rule.IsEnableTrump = (bool)prop["EnableTrump"];
                 rule.MaxLife = (int)prop["MaxLife"];
                 controller.SetSeed((uint)prop["Seed"]);

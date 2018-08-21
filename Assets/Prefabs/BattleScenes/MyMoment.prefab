@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 224191588707041208}
   - component: {fileID: 222759872161541578}
   - component: {fileID: 114632664319519332}
+  - component: {fileID: 114039402100127766}
   m_Layer: 0
   m_Name: MovePlot
   m_TagString: Untagged
@@ -109,6 +110,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114039402100127766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289518407690892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e416ee088cf605343ae965ae4e5304b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cross: {fileID: 1196200370273278}
 --- !u!114 &114048054049898286
 MonoBehaviour:
   m_ObjectHideFlags: 1

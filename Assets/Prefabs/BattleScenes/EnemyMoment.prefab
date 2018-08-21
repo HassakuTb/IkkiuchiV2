@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 224070462554502252}
   - component: {fileID: 222957462601580058}
   - component: {fileID: 114464696586035462}
+  - component: {fileID: 114390507434772706}
   m_Layer: 0
   m_Name: MovePlot
   m_TagString: Untagged
@@ -163,6 +164,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114390507434772706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450673750020118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e416ee088cf605343ae965ae4e5304b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cross: {fileID: 1831875645182758}
 --- !u!114 &114464696586035462
 MonoBehaviour:
   m_ObjectHideFlags: 1

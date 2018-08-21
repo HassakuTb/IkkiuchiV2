@@ -38,11 +38,11 @@ namespace Ikkiuchi.Core {
         private readonly ICard[] actionPenarty;
 
         public Plots(IRule rule) {
-            movePlot = new ICard[rule.CountOfMoment];
-            actionPlot = new ICard[rule.CountOfMoment];
+            movePlot = new ICard[rule.CountOfMoment.Value];
+            actionPlot = new ICard[rule.CountOfMoment.Value];
 
-            movePenarty = new ICard[rule.CountOfMoment];
-            actionPenarty = new ICard[rule.CountOfMoment];
+            movePenarty = new ICard[rule.CountOfMoment.Value];
+            actionPenarty = new ICard[rule.CountOfMoment.Value];
         }
 
         public void PlotAction(int index, ICard card) {

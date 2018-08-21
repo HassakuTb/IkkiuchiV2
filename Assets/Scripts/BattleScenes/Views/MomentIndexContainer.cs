@@ -1,8 +1,6 @@
 ﻿using Ikkiuchi.Core;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -13,16 +11,22 @@ namespace Ikkiuchi.BattleScenes.Views {
         public Text textPrefab;
 
         [Inject] private IRule rule;
+        [Inject] private Controller controller;
 
         private void Start() {
-            transform.DestroyAllChildren();
+            this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
+                .Where(p => p == Phase.Start)
+                .Subscribe(_ => {
+                    transform.DestroyAllChildren();
 
-            for(int i = 1; i <= rule.CountOfMoment; ++i) {
-                Text text = Instantiate(textPrefab);
-                text.text = i.ToString();
-                text.transform.SetParent(transform, false);
-                text.GetComponent<RectTransform>().SetAsLastSibling();
-            }
+                    for (int i = 1; i <= rule.CountOfMoment.Value; ++i) {
+                        Text text = Instantiate(textPrefab);
+                        text.text = i.ToString();
+                        text.transform.SetParent(transform, false);
+                        text.GetComponent<RectTransform>().SetAsLastSibling();
+                    }
+                })
+                .AddTo(this);
         }
     }
 }

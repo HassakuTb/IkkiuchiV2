@@ -67,7 +67,7 @@ namespace Ikkiuchi.Core {
 
         //  カードを配る
         public void DealCards() {
-            int handMax = rule.CountOfMoment * 2;
+            int handMax = rule.CountOfMoment.Value * 2;
 
             //  切り札をドロー
             if (rule.IsEnableTrump) {
@@ -98,7 +98,7 @@ namespace Ikkiuchi.Core {
         //  移動プロット
         //  プロットしない箇所は-1
         public void MovePlot(IPlayer player, int[] plots) {
-            for (int i = 0; i < rule.CountOfMoment; ++i) {
+            for (int i = 0; i < rule.CountOfMoment.Value; ++i) {
                 if (plots[i] == -1) continue;
                 player.Plots.PlotMove(i, cardSet.GetCard(plots[i]));
             }
@@ -120,7 +120,7 @@ namespace Ikkiuchi.Core {
         //  行動プロット
         //  プロットしない箇所は-1
         public void ActionPlot(IPlayer player, int[] plots) {
-            for (int i = 0; i < rule.CountOfMoment; ++i) {
+            for (int i = 0; i < rule.CountOfMoment.Value; ++i) {
                 if (plots[i] == -1) continue;
                 player.Plots.PlotAction(i, cardSet.GetCard(plots[i]));
             }
@@ -385,10 +385,10 @@ namespace Ikkiuchi.Core {
         public IEnumerator Resolve() {
             while (true) {
 
-                IList<IAction> p1Actions = Player1.GetActualActions(rule.CountOfMoment, this);
-                IList<IAction> p2Actions = Player2.GetActualActions(rule.CountOfMoment, this);
+                IList<IAction> p1Actions = Player1.GetActualActions(rule.CountOfMoment.Value, this);
+                IList<IAction> p2Actions = Player2.GetActualActions(rule.CountOfMoment.Value, this);
 
-                for (int i = 0; i < rule.CountOfMoment; ++i) {
+                for (int i = 0; i < rule.CountOfMoment.Value; ++i) {
                     IAction p1a = p1Actions[i];
                     IAction p2a = p2Actions[i];
 
