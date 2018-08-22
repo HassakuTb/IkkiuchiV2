@@ -20,7 +20,7 @@ namespace Ikkiuchi.TitleScenes {
                 rule.CountOfMoment.Value = (int)prop["CountOfMoment"];
                 rule.IsEnableTrump = (bool)prop["EnableTrump"];
                 rule.MaxLife = (int)prop["MaxLife"];
-                controller.SetSeed((uint)prop["Seed"]);
+                controller.SetSeed((uint)(long)prop["Seed"]);
 
                 SceneManager.LoadScene("BattleScene");
             }
