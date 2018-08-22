@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Ikkiuchi.Core;
+using Ikkiuchi.BattleScenes.ViewModels;
+using UniRx;
 
 namespace Ikkiuchi.BattleScenes.Views {
 
-    public class Card : MonoBehaviour, ICardBindable, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler{
+    [RequireComponent(typeof(CanvasGroup))]
+    public class Card : MonoBehaviour, ICardBindable, IPointerEnterHandler, IPointerExitHandler, IPlotBindable {
         
         private ICard card;
-        public GameObject DetailRoot { private get; set; }
-        public GameObject DraggingContainer { private get; set; }
-        public GameObject DraggingArrowPrefab { private get; set; }
-        public GameObject DraggingActionPrefab { private get; set; }
-
-        private GameObject dragging;
 
         private const float animationDelta = 15f;
         private float animationTargetH;
@@ -48,44 +45,32 @@ namespace Ikkiuchi.BattleScenes.Views {
             }
         }
 
-        public void BindCard(ICard card) {
-            this.card = card;
-        }
-
-        public void OnBeginDrag(PointerEventData eventData) {
-            if (eventData.button != PointerEventData.InputButton.Left) return;
-            dragging = Instantiate(DraggingArrowPrefab);
-            dragging.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
-                cb.BindCard(card);
-            });
-            dragging.transform.SetParent(DraggingContainer.transform, false);
-            dragging.transform.position = eventData.position;
-        }
-
-        public void OnDrag(PointerEventData eventData) {
-            if (eventData.button != PointerEventData.InputButton.Left) return;
-            dragging.transform.position = eventData.position;
-        }
-
-        public void OnEndDrag(PointerEventData eventData) {
-            // nop
-        }
-
         public void OnPointerEnter(PointerEventData eventData) {
-            DetailRoot.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
-                cb.BindCard(card);
-            });
-
             isSelected = true;
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            DetailRoot.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
-                cb.BindCard(null);
-            });
-
             isSelected = false;
         }
 
+        public void BindCard(ICard card) {
+            this.card = card;
+        }
+
+        public void BindPlotModel(PlotViewModel model) {
+            model.MovePlots.ObserveReplace()
+                .Subscribe(_ => {
+                    CanvasGroup cg = GetComponent<CanvasGroup>();
+                    if (model.MovePlots.Contains(card)) {
+                        cg.alpha = 0.3f;
+                        cg.blocksRaycasts = false;
+                    }
+                    else {
+                        cg.alpha = 1f;
+                        cg.blocksRaycasts = true;
+                    }
+                })
+                .AddTo(this);
+        }
     }
 }

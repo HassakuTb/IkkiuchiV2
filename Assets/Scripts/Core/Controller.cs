@@ -37,6 +37,14 @@ namespace Ikkiuchi.Core {
 
         [Inject] private RandomGenerator randGen;
 
+        public bool IsReadyMove(IPlayer player) {
+            return player == Player1 ? isP1MovePlotted : isP2MovePlotted;
+        }
+
+        public bool IsReadyAction(IPlayer player) {
+            return player == Player1 ? isP1ActionPlotted : isP2ActionPlotted;
+        }
+
         public void SetSeed(uint seed) {
             randGen.Seed = seed;
         }

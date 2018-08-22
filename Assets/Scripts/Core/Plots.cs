@@ -54,11 +54,11 @@ namespace Ikkiuchi.Core {
         }
 
         public bool IsMovePenarized(int index) {
-            return movePenarty[index] == null;
+            return movePenarty[index] != null;
         }
 
         public bool IsActionPenarized(int index) {
-            return actionPenarty[index] == null;
+            return actionPenarty[index] != null;
         }
 
         public bool IsMovePloted(int index) {

@@ -14,8 +14,8 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public RpcInvoker rpcInvoker;
 
-        [Inject] Controller controller;
-        [Inject] PlotViewModel plotVM;
+        [Inject] private Controller controller;
+        [Inject] private PlotViewModel plotVM;
 
         private void Start() {
             GetComponent<LongClickFillButton>().onLongClick.AddListener(() => {

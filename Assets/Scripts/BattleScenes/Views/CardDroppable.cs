@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
+using Ikkiuchi.Core;
 
 namespace Ikkiuchi.BattleScenes.Views {
     [RequireComponent(typeof(Image))]
-    public class CardDroppable : MonoBehaviour, IDropHandler {
+    public class CardDroppable : MonoBehaviour{
 
-        public void OnDrop(PointerEventData eventData) {
-            if (eventData.button != PointerEventData.InputButton.Left) return;
-            DraggingCard dragging = eventData.pointerDrag.GetComponent<DraggingCard>();
+        public void DropCard(ICard card) {
+
             GetComponentsInChildren<ICardBindable>().ForEach(cb => {
-                cb.BindCard(dragging.Card);
+                cb.BindCard(card);
             });
         }
     }

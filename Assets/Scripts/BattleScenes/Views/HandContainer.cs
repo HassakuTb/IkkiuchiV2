@@ -2,6 +2,7 @@
 using UnityEngine;
 using UniRx;
 using Zenject;
+using Ikkiuchi.BattleScenes.ViewModels;
 
 namespace Ikkiuchi.BattleScenes.Views {
     public class HandContainer : MonoBehaviour {
@@ -14,6 +15,7 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject draggingActionPrefab;
 
         [Inject] private Controller controller;
+        [Inject] private PlotViewModel plotModel;
 
         private void Start() {
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
@@ -36,10 +38,14 @@ namespace Ikkiuchi.BattleScenes.Views {
                 elm.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                     cb.BindCard(card);
                 });
-                elm.GetComponent<Card>().DetailRoot = detailRoot;
-                elm.GetComponent<Card>().DraggingContainer = draggingContainer;
-                elm.GetComponent<Card>().DraggingArrowPrefab = draggingArrowPrefab;
-                elm.GetComponent<Card>().DraggingActionPrefab = draggingActionPrefab;
+                elm.GetComponentsInChildren<IPlotBindable>().ForEach(pb => {
+                    pb.BindPlotModel(plotModel);
+                });
+
+                elm.GetComponent<Detail>().DetailRoot = detailRoot;
+                elm.GetComponent<DraggableCard>().DraggingContainer = draggingContainer;
+                elm.GetComponent<DraggableCard>().DraggingArrowPrefab = draggingArrowPrefab;
+                elm.GetComponent<DraggableCard>().DraggingActionPrefab = draggingActionPrefab;
                 elm.transform.SetParent(transform, false);
                 elm.GetComponent<RectTransform>().SetAsLastSibling();
             });
