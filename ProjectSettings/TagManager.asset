@@ -48,3 +48,6 @@ TagManager:
   - name: Gradiator
     uniqueID: 3301110793
     locked: 0
+  - name: Effect
+    uniqueID: 657695719
+    locked: 0

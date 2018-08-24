@@ -22,8 +22,16 @@ namespace Ikkiuchi.BattleScenes.Views {
                 .Subscribe(p => {
                     switch (p) {
                         case Phase.MovePlot:
+                            UpdateCards();
+                            GetComponentsInChildren<DraggableCard>().ForEach(dc => {
+                                dc.SetAsMovePlot();
+                            });
+                            break;
                         case Phase.ActionPlot:
                             UpdateCards();
+                            GetComponentsInChildren<DraggableCard>().ForEach(dc => {
+                                dc.SetAsActionPlot();
+                            });
                             break;
                     }
                 })

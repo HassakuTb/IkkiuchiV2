@@ -16,7 +16,7 @@ namespace Ikkiuchi.Core {
 
     public class Rule : IRule{
         public int MaxLife { get; set; } = 10;
-        public IReactiveProperty<int> CountOfMoment { get; set; } = new ReactiveProperty<int>(5);
+        public IReactiveProperty<int> CountOfMoment { get; set; } = new ReactiveProperty<int>(2);
         public bool IsEnableTrump { get; set; } = true;
     }
 }

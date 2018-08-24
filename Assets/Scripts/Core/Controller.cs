@@ -414,7 +414,7 @@ namespace Ikkiuchi.Core {
                     //  決着判定
                     if (IsSettled()) {
                         CurrentPhase = Phase.Settle;
-                        yield return null;
+                        yield break;
                     }
 
                     //  先制攻撃処理
@@ -423,7 +423,7 @@ namespace Ikkiuchi.Core {
                     //  決着判定
                     if (IsSettled()) {
                         CurrentPhase = Phase.Settle;
-                        yield return null;
+                        yield break;
                     }
 
                     yield return ResolveCounter(p1a, p2a, i);
@@ -432,7 +432,7 @@ namespace Ikkiuchi.Core {
                     //  決着判定
                     if (IsSettled()) {
                         CurrentPhase = Phase.Settle;
-                        yield return null;
+                        yield break;
                     }
 
                     //  後手移動処理
@@ -443,7 +443,7 @@ namespace Ikkiuchi.Core {
                     //  決着判定
                     if (IsSettled()) {
                         CurrentPhase = Phase.Settle;
-                        yield return null;
+                        yield break;
                     }
 
                     //  相手移動処理
@@ -452,7 +452,7 @@ namespace Ikkiuchi.Core {
                     //  決着判定
                     if (IsSettled()) {
                         CurrentPhase = Phase.Settle;
-                        yield return null;
+                        yield break;
                     }
 
                 }
@@ -471,6 +471,26 @@ namespace Ikkiuchi.Core {
             //  切り札を除く手札を捨てる
             Player1.Hand.TrashExcludeTrump(trash);
             Player2.Hand.TrashExcludeTrump(trash);
+        }
+
+
+
+        //  移動プロット
+        //  プロットしない箇所は-1
+        public void MovePlotDebug(int[] plots) {
+            MovePlot(MyPlayer, plots);
+
+            int[] enemyPlots = new int[rule.CountOfMoment.Value];
+            for(int i = 0; i < enemyPlots.Length; ++i) {
+                if (EnemyPlayer.Plots.IsMovePenarized(i)) {
+                    enemyPlots[i] = -1;
+                }
+                else {
+                    enemyPlots[i] = EnemyPlayer.Hand.Cards[i].Id;
+                }
+            }
+            MovePlot(EnemyPlayer, enemyPlots);
+            
         }
     }
 }

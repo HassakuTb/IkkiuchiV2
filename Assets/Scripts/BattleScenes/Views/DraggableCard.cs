@@ -16,13 +16,23 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject DraggingArrowPrefab { private get; set; }
         public GameObject DraggingActionPrefab { private get; set; }
 
+        private bool isMove = false;
+
+        public void SetAsMovePlot() {
+            isMove = true;
+        }
+
+        public void SetAsActionPlot() {
+            isMove = false;
+        }
+
         public void BindCard(ICard card) {
             this.card = card;
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
             if (eventData.button != PointerEventData.InputButton.Left) return;
-            dragging = Instantiate(DraggingArrowPrefab);
+            dragging = Instantiate(isMove ? DraggingArrowPrefab : DraggingActionPrefab);
             dragging.GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                 cb.BindCard(card);
             });

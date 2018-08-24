@@ -10,11 +10,21 @@ namespace Ikkiuchi.Networkings {
         [Inject] private Controller controller;
 
         public void InvokeRpcSubmitMovePlot(bool isPlayer1, int[] plots) {
-            GetComponent<PhotonView>().RPC("RPCSubmitMovePlot", PhotonTargets.All, isPlayer1, plots);
+            if (PhotonNetwork.room != null) {
+                GetComponent<PhotonView>().RPC("RPCSubmitMovePlot", PhotonTargets.All, isPlayer1, plots);
+            }
+            else {
+                controller.MovePlotDebug(plots);
+            }
         }
 
         public void InvokeRpcSubmitActionPlot(bool isPlayer1, int[] plots) {
-            GetComponent<PhotonView>().RPC("RPCSubmitActionPlot", PhotonTargets.All, isPlayer1, plots);
+            if (PhotonNetwork.room != null) {
+                GetComponent<PhotonView>().RPC("RPCSubmitActionPlot", PhotonTargets.All, isPlayer1, plots);
+            }
+            else {
+                //
+            }
         }
 
         [PunRPC]
