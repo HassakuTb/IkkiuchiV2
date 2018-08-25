@@ -45,6 +45,9 @@ TagManager:
   - name: Field
     uniqueID: 4205501905
     locked: 0
+  - name: Path
+    uniqueID: 914609697
+    locked: 0
   - name: Gradiator
     uniqueID: 3301110793
     locked: 0

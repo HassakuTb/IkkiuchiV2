@@ -15,6 +15,7 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public void BindCard(ICard card) {
             if (isAction) {
+                model.PlotAction(card, momentIndex);
             }
             else {
                 model.PlotMove(card, momentIndex);

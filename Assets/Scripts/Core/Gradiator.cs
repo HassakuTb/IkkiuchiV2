@@ -12,6 +12,9 @@ namespace Ikkiuchi.Core {
 
         //  相対位置→絶対位置変換
         Pos RelativePosToAbsolute(RelativePos relative);
+
+        //  相対位置→絶対位置変換
+        Pos RelativePosToAbsolute(Pos p, RelativePos relative);
     }
 
     //  実装
@@ -44,6 +47,20 @@ namespace Ikkiuchi.Core {
                 default:
                     UnityEngine.Assertions.Assert.IsTrue(false);
                     return Position;
+            }
+        }
+
+        //  相対位置→絶対位置変換
+        public Pos RelativePosToAbsolute(Pos p, RelativePos relative) {
+            //  南向きプレイヤー(P2)は相対位置を逆転させて加算する
+            switch (Direction) {
+                case GradiatorDirection.North:
+                    return new Pos(p.X + relative.X, p.Y + relative.Y);
+                case GradiatorDirection.South:
+                    return new Pos(p.X - relative.X, p.Y - relative.Y);
+                default:
+                    UnityEngine.Assertions.Assert.IsTrue(false);
+                    return p;
             }
         }
     }

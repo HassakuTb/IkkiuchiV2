@@ -481,7 +481,7 @@ namespace Ikkiuchi.Core {
             MovePlot(MyPlayer, plots);
 
             int[] enemyPlots = new int[rule.CountOfMoment.Value];
-            for(int i = 0; i < enemyPlots.Length; ++i) {
+            for (int i = 0; i < enemyPlots.Length; ++i) {
                 if (EnemyPlayer.Plots.IsMovePenarized(i)) {
                     enemyPlots[i] = -1;
                 }
@@ -490,7 +490,23 @@ namespace Ikkiuchi.Core {
                 }
             }
             MovePlot(EnemyPlayer, enemyPlots);
-            
+
+        }
+
+        public void ActionPlotDebug(int[] plots) {
+            ActionPlot(MyPlayer, plots);
+
+            int[] enemyPlots = new int[rule.CountOfMoment.Value];
+            for (int i = 0; i < enemyPlots.Length; ++i) {
+                if (EnemyPlayer.Plots.IsActionPenarized(i)) {
+                    enemyPlots[i] = -1;
+                }
+                else {
+                    enemyPlots[i] = EnemyPlayer.Hand.Cards[i].Id;
+                }
+            }
+            ActionPlot(EnemyPlayer, enemyPlots);
+
         }
     }
 }

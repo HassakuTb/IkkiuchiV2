@@ -1,10 +1,11 @@
-﻿using Ikkiuchi.Core;
+﻿using System;
+using Ikkiuchi.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Ikkiuchi.BattleScenes.Views {
     [RequireComponent(typeof(Image))]
-    public class CardImage : MonoBehaviour, ICardBindable {
+    public class CardBackground : MonoBehaviour, ICardBindable {
 
         private float alpha;
 
@@ -21,7 +22,6 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public void BindCard(ICard card) {
             Image image = GetComponent<Image>();
-            image.sprite = card?.Action.CardImage;
             image.color = new Color {
                 r = image.color.r,
                 g = image.color.g,

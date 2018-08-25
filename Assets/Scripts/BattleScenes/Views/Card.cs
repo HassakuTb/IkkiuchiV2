@@ -71,6 +71,20 @@ namespace Ikkiuchi.BattleScenes.Views {
                     }
                 })
                 .AddTo(this);
+
+            model.ActionPlots.ObserveReplace()
+                .Subscribe(_ => {
+                    CanvasGroup cg = GetComponent<CanvasGroup>();
+                    if (model.ActionPlots.Contains(card)) {
+                        cg.alpha = 0.3f;
+                        cg.blocksRaycasts = false;
+                    }
+                    else {
+                        cg.alpha = 1f;
+                        cg.blocksRaycasts = true;
+                    }
+                })
+                .AddTo(this);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject detailRoot;
         public GameObject draggingContainer;
         public GameObject draggingArrowPrefab;
+        public GameObject draggingActionPrefab;
 
         [Inject] private IRule rule;
         [Inject] private Controller controller;
@@ -38,6 +39,10 @@ namespace Ikkiuchi.BattleScenes.Views {
                         moment.GetComponent<RectTransform>().SetAsLastSibling();
                     }
 
+                    GetComponentsInChildren<IControllerSettable>().ForEach(cs => {
+                        cs.SetController(controller);
+                    });
+
                     GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                         cb.BindCard(null);
                     });
@@ -48,6 +53,7 @@ namespace Ikkiuchi.BattleScenes.Views {
 
                     GetComponentsInChildren<DraggableCard>().ForEach(d => {
                         d.DraggingArrowPrefab = draggingArrowPrefab;
+                        d.DraggingActionPrefab = draggingActionPrefab;
                         d.DraggingContainer = draggingContainer;
                     });
 

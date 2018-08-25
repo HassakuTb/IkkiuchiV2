@@ -23,7 +23,7 @@ namespace Ikkiuchi.Networkings {
                 GetComponent<PhotonView>().RPC("RPCSubmitActionPlot", PhotonTargets.All, isPlayer1, plots);
             }
             else {
-                //
+                controller.ActionPlotDebug(plots);
             }
         }
 
