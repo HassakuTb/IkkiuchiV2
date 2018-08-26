@@ -13,6 +13,7 @@ namespace Ikkiuchi.BattleScenes.Views {
         public Text action;
         public Text resolve;
         public GameObject panel;
+        public ResolveInvoker resolveInvoker;
 
         public float slideTime;
 
@@ -83,6 +84,11 @@ namespace Ikkiuchi.BattleScenes.Views {
                 //  開始処理
                 if(target == start) {
                     controller.DealCards();
+                }
+
+                else if (target == resolve) {
+                    controller.CurrentIndex = 0;
+                    resolveInvoker.StartResolve();
                 }
             }
         }

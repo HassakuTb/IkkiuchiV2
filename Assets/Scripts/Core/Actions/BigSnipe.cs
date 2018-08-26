@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Ikkiuchi.Core.Actions {
     //  精密射撃
@@ -6,9 +7,14 @@ namespace Ikkiuchi.Core.Actions {
     public class BigSnipe : Action{
 
         public override int ResolveDamage(int momentIndex, IPlayer player) {
+
+            IPlayer enemy = player == Controller.Player1 ? Controller.Player2 : Controller.Player1;
             if (player == Controller.Player1) {
                 if (!Controller.Player2.Plots.IsMovePloted(momentIndex)) {
-                    return 3;
+                    if (EnumerateDamageRange().Select(r => player.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
+                        return 3;
+                    }
+                    return 0;
                 }
                 else {
                     return 0;
@@ -16,7 +22,10 @@ namespace Ikkiuchi.Core.Actions {
             }
             else {
                 if (!Controller.Player1.Plots.IsMovePloted(momentIndex)) {
-                    return 3;
+                    if (EnumerateDamageRange().Select(r => player.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
+                        return 3;
+                    }
+                    return 0;
                 }
                 else {
                     return 0;

@@ -17,7 +17,7 @@ namespace Ikkiuchi.Core.Actions {
 
         public override int ResolveDamage(int momentIndex, IPlayer player) {
             IPlayer enemy = player == Controller.Player1 ? Controller.Player2 : Controller.Player1;
-            if (EnumerateDamageRange().Select(r => enemy.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
+            if (EnumerateDamageRange().Select(r => player.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
                 return 1;
             }
             else {
@@ -27,7 +27,7 @@ namespace Ikkiuchi.Core.Actions {
 
         public override Pos ExpectedEnemyMove(int momentIndex, IPlayer player) {
             IPlayer enemy = player == Controller.Player1 ? Controller.Player2 : Controller.Player1;
-            if (EnumerateDamageRange().Select(r => enemy.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
+            if (EnumerateDamageRange().Select(r => player.Gradiator.RelativePosToAbsolute(r)).Contains(enemy.Gradiator.Position)) {
                 RelativePos relative = new RelativePos(
                     enemy.Gradiator.Position.X - player.Gradiator.Position.X,
                     enemy.Gradiator.Position.Y - player.Gradiator.Position.Y

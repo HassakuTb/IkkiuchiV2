@@ -15,9 +15,25 @@ namespace Ikkiuchi.TitleScenes.Views {
 
         private void Start() {
             GetComponent<LongClickFillButton>().onLongClick.AddListener(() => {
-                if (!PhotonNetwork.CreateRoom(model.RoomName)){
+
+                var prop = new ExitGames.Client.Photon.Hashtable();
+
+                prop.Add("CountOfMoment", model.MomentCount);
+                prop.Add("MaxLife", model.MaxLife);
+                prop.Add("EnableTrump", model.IsEnabledTrump);
+                prop.Add("Seed", Environment.TickCount);
+
+                RoomOptions opt = new RoomOptions();
+                opt.IsOpen = true;
+                opt.IsVisible = true;
+                opt.MaxPlayers = 2;
+                opt.CustomRoomProperties = prop;
+                
+                if (!PhotonNetwork.CreateRoom(model.RoomName, opt, null)){
                     Debug.LogWarning("failed create room");
+
                 }
+                windowState.State = WindowStateEnum.WaitJoin;
             });
 
             CanvasGroup cg = GetComponent<CanvasGroup>();
@@ -32,17 +48,6 @@ namespace Ikkiuchi.TitleScenes.Views {
 
         public void OnCreatedRoom() {
             Debug.Log("Room Created");
-
-            var prop = new ExitGames.Client.Photon.Hashtable();
-
-            prop.Add("CountOfMoment", model.MomentCount);
-            prop.Add("MaxLife", model.MaxLife);
-            prop.Add("EnableTrump", model.IsEnabledTrump);
-            prop.Add("Seed", Environment.TickCount);
-
-            PhotonNetwork.room.SetCustomProperties(prop);
-
-            windowState.State = WindowStateEnum.WaitJoin;
         }
     }
 }

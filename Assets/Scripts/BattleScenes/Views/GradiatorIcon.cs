@@ -13,7 +13,7 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         private IPlayer player;
 
-        private const float animationTime = 0.5f;
+        private const float animationTime = 0.25f;
 
         private bool isMoveToAnimating;
         private bool isFailedAnimating;
@@ -50,11 +50,12 @@ namespace Ikkiuchi.BattleScenes.Views {
             moveToDirection = (this.moveTo - transform.position).normalized;
 
         }
+        
 
         private void Update() {
             if (isMoveToAnimating) {
                 if(animationCurrentTime >= animationTime) {
-                    transform.position = player.Gradiator.Position.ToWorldPos();
+                    transform.position = moveTo;
                     isMoveToAnimating = false;
                 }
                 else {

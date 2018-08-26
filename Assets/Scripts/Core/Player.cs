@@ -87,7 +87,7 @@ namespace Ikkiuchi.Core {
                 }
                 //  移動がプロットされているとき
                 else if (Plots.IsMovePloted(i)) {
-                    Move act = ScriptableObject.Instantiate(Resources.Load<Move>("ScriptableObjecs/Actions/Move"));
+                    Move act = ScriptableObject.Instantiate(Resources.Load<Move>("ScriptableObjects/Actions/Move"));
                     act.Controller = controller;
                     act.Direction = Plots.MovePloted(i).MoveDirection;
                     actual.Add(act);

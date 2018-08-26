@@ -42,7 +42,9 @@ namespace Ikkiuchi.BattleScenes.ViewModels {
                 }
             }
 
-            MovePlots[index] = card;
+            if(MovePlots[index] != card) {
+                MovePlots[index] = card;
+            }
         }
 
         public void PlotAction (ICard card, int index) {
@@ -52,7 +54,9 @@ namespace Ikkiuchi.BattleScenes.ViewModels {
                 }
             }
 
-            ActionPlots[index] = card;
+            if (ActionPlots[index] != card) {
+                ActionPlots[index] = card;
+            }
         }
 
     }

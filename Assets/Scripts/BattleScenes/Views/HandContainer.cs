@@ -5,6 +5,7 @@ using Zenject;
 using Ikkiuchi.BattleScenes.ViewModels;
 
 namespace Ikkiuchi.BattleScenes.Views {
+    [RequireComponent(typeof(CanvasGroup))]
     public class HandContainer : MonoBehaviour {
 
         public GameObject cardPrefab;
@@ -20,8 +21,11 @@ namespace Ikkiuchi.BattleScenes.Views {
         private void Start() {
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Subscribe(p => {
+                    CanvasGroup cg = GetComponent<CanvasGroup>();
                     switch (p) {
                         case Phase.MovePlot:
+                            cg.alpha = 1.0f;
+                            cg.blocksRaycasts = true;
                             UpdateCards();
                             GetComponentsInChildren<DraggableCard>().ForEach(dc => {
                                 dc.SetAsMovePlot();
@@ -33,6 +37,11 @@ namespace Ikkiuchi.BattleScenes.Views {
                                 dc.SetAsActionPlot();
                             });
                             break;
+                        case Phase.Resolve:
+                            cg.alpha = 0.3f;
+                            cg.blocksRaycasts = false;
+                            break;
+
                     }
                 })
                 .AddTo(this);

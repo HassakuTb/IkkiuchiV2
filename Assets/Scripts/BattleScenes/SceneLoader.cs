@@ -10,7 +10,6 @@ namespace Ikkiuchi.BattleScenes {
         
 
         private void Start() {
-            controller.SetSeed((uint)Environment.TickCount); //  TODO
             controller.MakeBoard(true);
         }
     }

@@ -27,6 +27,11 @@ namespace Ikkiuchi.BattleScenes.Views {
 
                     for (int i = 0; i < rule.CountOfMoment.Value; ++i) {
                         GameObject moment = Instantiate(momentPrefab);
+
+                        moment.GetComponentsInChildren<IControllerSettable>().ForEach(cs => {
+                            cs.SetController(controller);
+                        });
+
                         moment.GetComponentsInChildren<IMomentIndexBindable>().ForEach(mib => {
                             if (isMyPlayer) {
                                 mib.BindMoment(i, controller.MyPlayer, model);
@@ -39,16 +44,12 @@ namespace Ikkiuchi.BattleScenes.Views {
                         moment.GetComponent<RectTransform>().SetAsLastSibling();
                     }
 
-                    GetComponentsInChildren<IControllerSettable>().ForEach(cs => {
-                        cs.SetController(controller);
+                    GetComponentsInChildren<Detail>().ForEach(d => {
+                        d.DetailRoot = detailRoot;
                     });
 
                     GetComponentsInChildren<ICardBindable>().ForEach(cb => {
                         cb.BindCard(null);
-                    });
-
-                    GetComponentsInChildren<Detail>().ForEach(d => {
-                        d.DetailRoot = detailRoot;
                     });
 
                     GetComponentsInChildren<DraggableCard>().ForEach(d => {

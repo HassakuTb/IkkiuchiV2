@@ -3,7 +3,7 @@
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -14,7 +14,7 @@ MonoBehaviour:
   actionName: "\u5207\u672D\u3000\u6025\u8972"
   cardImage: {fileID: 21300040, guid: 5ae6e9fa71f9c8b46be04dc69143976f, type: 3}
   penartyMove: 1
-  penartyAction: 1
+  penartyAction: 0
   isTrump: 1
   hasRange: 1
   hasRapidAttack: 0
