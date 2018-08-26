@@ -13,14 +13,11 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public RpcInvoker rpcInvoker;
 
-        [Inject] private Controller controller;
-        [Inject] private PlotViewModel plotVM;
-
         private void Start() {
             GetComponent<LongClickFillButton>().onLongClick.AddListener(() => {
                 rpcInvoker.InvokeRpcSubmitActionPlot(
-                    controller.MyPlayer == controller.Player1,
-                    plotVM.ActionPlots.Select(c => c != null ? c.Id : -1).ToArray());
+                    Controller.Instance.MyPlayer == Controller.Instance.Player1,
+                    PlotViewModel.Instance.ActionPlots.Select(c => c != null ? c.Id : -1).ToArray());
             });
         }
     }

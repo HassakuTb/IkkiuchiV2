@@ -6,11 +6,8 @@ using System;
 namespace Ikkiuchi.BattleScenes {
     public class SceneLoader : MonoBehaviour {
 
-        [Inject] private Controller controller;
-        
-
         private void Start() {
-            controller.MakeBoard(true);
+            Controller.Instance.MakeBoard(PhotonNetwork.isMasterClient);
         }
     }
 }

@@ -7,7 +7,11 @@ namespace Ikkiuchi.Networkings {
     [RequireComponent(typeof(PhotonView))]
     public class RpcInvoker : MonoBehaviour{
 
-        [Inject] private Controller controller;
+        private Controller controller;
+
+        private void Start() {
+            controller = Controller.Instance;
+        }
 
         public void InvokeRpcSubmitMovePlot(bool isPlayer1, int[] plots) {
             if (PhotonNetwork.room != null) {

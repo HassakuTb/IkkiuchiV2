@@ -5,14 +5,20 @@ using System.Linq;
 
 namespace Ikkiuchi.BattleScenes.ViewModels {
     public class PlotViewModel {
-        
-        [Inject] private Controller controller;
+
+        private static PlotViewModel instance;
+
+        public static PlotViewModel Instance {
+            get {
+                if (instance == null) instance = new PlotViewModel(Rule.Instance);
+                return instance;
+            }
+        }
 
         public ReactiveCollection<ICard> MovePlots { get; private set; } = new ReactiveCollection<ICard>();
         public ReactiveCollection<ICard> ActionPlots { get; private set; } = new ReactiveCollection<ICard>();
-
-        [Inject]
-        public PlotViewModel(IRule rule) {
+        
+        private PlotViewModel(IRule rule) {
             rule.CountOfMoment.ToReactiveProperty().Subscribe(cm => {
                 for(int i = 0; i < cm; ++i) {
                     MovePlots.Add(null);
@@ -32,7 +38,7 @@ namespace Ikkiuchi.BattleScenes.ViewModels {
         //  移動プロットがペナルティかカードで埋まっている
         public bool IsMovePlotFull() {
             return MovePlots.Select((c, i) => new { Card = c, Index = i })
-                .All(x => controller.MyPlayer.Plots.IsMovePenarized(x.Index) || x.Card != null);
+                .All(x => Controller.Instance.MyPlayer.Plots.IsMovePenarized(x.Index) || x.Card != null);
         }
 
         public void PlotMove(ICard card, int index) {

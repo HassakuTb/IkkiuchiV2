@@ -9,8 +9,8 @@ using Ikkiuchi.BattleScenes.ViewModels;
 namespace Ikkiuchi.BattleScenes.Views {
     public class ResolveInvoker : MonoBehaviour{
 
-        [Inject] private Controller controller;
-        [Inject] private PlotViewModel plotModel;
+        private Controller controller;
+        private PlotViewModel plotModel;
 
         public GradiatorIcon myGrad;
         public GradiatorIcon enemyGrad;
@@ -30,6 +30,9 @@ namespace Ikkiuchi.BattleScenes.Views {
         private bool isResolving;
 
         private void Start() {
+            controller = Controller.Instance;
+            plotModel = PlotViewModel.Instance;
+
             p1Grad = controller.MyPlayer == controller.Player1 ? myGrad : enemyGrad;
             p2Grad = p1Grad == myGrad ? enemyGrad : myGrad;
 
@@ -48,22 +51,22 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public void SlashEffect(Pos pos) {
             var dam = Instantiate(slash);
-            dam.transform.position = pos.ToWorldPos();
+            dam.transform.position = pos.ToWorldPos(controller.MyPlayer == controller.Player1);
         }
 
         public void HealEffect(Pos pos) {
             var dam = Instantiate(heal);
-            dam.transform.position = pos.ToWorldPos();
+            dam.transform.position = pos.ToWorldPos(controller.MyPlayer == controller.Player1);
         }
 
         public void PowUpEffect(Pos pos) {
             var dam = Instantiate(powUp);
-            dam.transform.position = pos.ToWorldPos();
+            dam.transform.position = pos.ToWorldPos(controller.MyPlayer == controller.Player1);
         }
 
         public void DamageEffect(Pos pos, int damage) {
             var dam = Instantiate(damageValuePrefab);
-            dam.transform.position = pos.ToWorldPos();
+            dam.transform.position = pos.ToWorldPos(controller.MyPlayer == controller.Player1);
             dam.sprite = damageSprites[damage];
         }
 

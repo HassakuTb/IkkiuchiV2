@@ -37,8 +37,6 @@ namespace Ikkiuchi.Core {
 
     public class Player : IPlayer {
 
-        [Inject] private DiContainer container;
-
         //  引いた切り札の数
         private int drawedTramps = 0;
 

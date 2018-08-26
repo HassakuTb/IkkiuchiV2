@@ -7,11 +7,10 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public GameObject lifeItemPrefab;
 
-        [Inject] private Controller controller;
-
         private int prevValue = 0;
 
         private void Update() {
+            var controller = Controller.Instance;
             if (controller.EnemyPlayer == null) return;
 
             if(controller.EnemyPlayer.Life.Value != prevValue) {

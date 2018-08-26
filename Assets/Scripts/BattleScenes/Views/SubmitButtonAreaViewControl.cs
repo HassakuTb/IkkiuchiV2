@@ -11,9 +11,11 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject actionSubmitButton;
         public GameObject waitingText;
 
-        [Inject] private Controller controller;
+        private Controller controller;
 
         private void Start() {
+            controller = Controller.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase).Select(_ => Unit.Default)
                 .Merge(this.ObserveEveryValueChanged(_ => controller.IsReadyMove(controller.MyPlayer)).Select(_ => Unit.Default))
                 .Merge(this.ObserveEveryValueChanged(_ => controller.IsReadyAction(controller.MyPlayer)).Select(_ => Unit.Default))
@@ -38,8 +40,8 @@ namespace Ikkiuchi.BattleScenes.Views {
                         }
                         else {
                             moveSubmitButton.SetActive(false);
-                            actionSubmitButton.SetActive(true);
-                            waitingText.SetActive(false);
+                            actionSubmitButton.SetActive(false);
+                            waitingText.SetActive(true);
                         }
                     }
                     else {

@@ -7,7 +7,7 @@ using Zenject;
 namespace Ikkiuchi.BattleScenes.Views {
     public class GradiatorIcon : MonoBehaviour{
 
-        [Inject] private Controller controller;
+        private Controller controller;
 
         public bool isMyPlayer;
 
@@ -22,19 +22,21 @@ namespace Ikkiuchi.BattleScenes.Views {
         private Vector3 moveToDirection;
 
         private void Start() {
+            controller = Controller.Instance;
+
             player = isMyPlayer ? controller.MyPlayer : controller.EnemyPlayer;
 
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Where(p => p == Phase.Start)
                 .Subscribe(_ => {
                     transform.localPosition =
-                        player.Gradiator.Position.ToWorldPos();
+                        player.Gradiator.Position.ToWorldPos(controller.MyPlayer == controller.Player1);
                 })
                 .AddTo(this);
         }
 
         public void StartMoveTo(Pos moveTo) {
-            this.moveTo = moveTo.ToWorldPos();
+            this.moveTo = moveTo.ToWorldPos(controller.MyPlayer == controller.Player1);
             isMoveToAnimating = true;
             animationCurrentTime = 0f;
 
@@ -43,7 +45,7 @@ namespace Ikkiuchi.BattleScenes.Views {
         }
 
         public void StartMoveFailed(Pos moveTo) {
-            this.moveTo = moveTo.ToWorldPos();
+            this.moveTo = moveTo.ToWorldPos(controller.MyPlayer == controller.Player1);
             isFailedAnimating = true;
             animationCurrentTime = 0f;
 
@@ -65,7 +67,7 @@ namespace Ikkiuchi.BattleScenes.Views {
             }
             else if(isFailedAnimating){
                 if (animationCurrentTime >= animationTime) {
-                    transform.position = player.Gradiator.Position.ToWorldPos();
+                    transform.position = player.Gradiator.Position.ToWorldPos(controller.MyPlayer == controller.Player1);
                     isFailedAnimating = false;
                 }
                 else {

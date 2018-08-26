@@ -8,14 +8,17 @@ using Zenject;
 namespace Ikkiuchi.BattleScenes.Views {
     public class EnemyPathContainer : MonoBehaviour{
 
-        [Inject] private IRule rule;
-        [Inject] private Controller controller;
+        private IRule rule;
+        private Controller controller;
 
         public GameObject pathPrefab;
 
         private List<GameObject> pathes = new List<GameObject>();
 
         private void Start() {
+            rule = Rule.Instance;
+            controller = Controller.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Subscribe(_ => UpdatePath())
                 .AddTo(this);
@@ -48,7 +51,7 @@ namespace Ikkiuchi.BattleScenes.Views {
                 }
                 else {
                     pathes[i].SetActive(true);
-                    pathes[i].transform.localPosition = currentPos.ToWorldPos();
+                    pathes[i].transform.localPosition = currentPos.ToWorldPos(controller.MyPlayer == controller.Player1);
                     Direction dir = controller.EnemyPlayer.Plots.GetMovePlot(i).MoveDirection;
                     pathes[i].transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, dir.ToRotateZ()));
 

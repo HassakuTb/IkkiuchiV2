@@ -13,6 +13,7 @@ namespace Ikkiuchi.TitleScenes.Views {
         private WindowState windowState;
 
         private void Update() {
+            if (windowState == null) return;
             createRoomWindow.SetActive(windowState.State == WindowStateEnum.BuildRoom);
             joinRoomWindow.SetActive(windowState.State == WindowStateEnum.SelectRoom);
             waitingWindow.SetActive(windowState.State == WindowStateEnum.WaitJoin);

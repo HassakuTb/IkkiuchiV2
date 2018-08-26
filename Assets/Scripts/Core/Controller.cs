@@ -23,7 +23,21 @@ namespace Ikkiuchi.Core {
 
     public class Controller {
 
-        [Inject] private IRule rule;
+        private static Controller instance;
+
+        public static Controller Instance {
+            get {
+                if (instance == null) instance = new Controller();
+                return instance;
+            }
+        }
+
+        private Controller() {
+            rule = Rule.Instance;
+            randGen = RandomGenerator.Instance;
+        }
+
+        private IRule rule;
 
         public IPlayer Player1 { get; set; }
         public IPlayer Player2 { get; set; }
@@ -40,7 +54,7 @@ namespace Ikkiuchi.Core {
 
         public IPlayer MyPlayer { get; set; }
 
-        [Inject] private RandomGenerator randGen;
+        private RandomGenerator randGen;
 
         public bool P1MoveAnimation { get; set; }
         public bool P2MoveAnimation { get; set; }
@@ -86,8 +100,8 @@ namespace Ikkiuchi.Core {
             return player == Player1 ? isP1ActionPlotted : isP2ActionPlotted;
         }
 
-        public void SetSeed(uint seed) {
-            randGen.Seed = seed;
+        public void SetSeed(int seed) {
+            randGen.Seed = (uint)seed;
         }
 
         //  ボードを作成する

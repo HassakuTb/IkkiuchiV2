@@ -15,6 +15,16 @@ namespace Ikkiuchi.Core {
     }
 
     public class Rule : IRule{
+
+        private static Rule instance;
+
+        public static Rule Instance {
+            get {
+                if (instance == null) instance = new Rule();
+                return instance;
+            }
+        }
+
         public int MaxLife { get; set; } = 10;
         public IReactiveProperty<int> CountOfMoment { get; set; } = new ReactiveProperty<int>(5);
         public bool IsEnableTrump { get; set; } = true;

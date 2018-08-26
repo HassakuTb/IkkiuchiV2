@@ -10,10 +10,13 @@ namespace Ikkiuchi.BattleScenes.Views {
 
         public Text textPrefab;
 
-        [Inject] private IRule rule;
-        [Inject] private Controller controller;
+        private IRule rule;
+        private Controller controller;
 
         private void Start() {
+            rule = Rule.Instance;
+            controller = Controller.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Where(p => p == Phase.Start)
                 .Subscribe(_ => {

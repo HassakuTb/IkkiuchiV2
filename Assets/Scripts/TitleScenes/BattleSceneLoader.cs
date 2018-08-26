@@ -8,8 +8,13 @@ namespace Ikkiuchi.TitleScenes {
     public class BattleSceneLoader : MonoBehaviour{
 
         [Inject] private WindowState windowState;
-        [Inject] private IRule rule;
-        [Inject] private Controller controller;
+        private IRule rule;
+        private Controller controller;
+
+        private void Start() {
+            rule = Rule.Instance;
+            controller = Controller.Instance;
+        }
 
         public void OnJoinedRoom() {
             Debug.Log("OnJoined");
@@ -20,7 +25,7 @@ namespace Ikkiuchi.TitleScenes {
                 rule.CountOfMoment.Value = (int)prop["CountOfMoment"];
                 rule.IsEnableTrump = (bool)prop["EnableTrump"];
                 rule.MaxLife = (int)prop["MaxLife"];
-                controller.SetSeed((uint)(long)prop["Seed"]);
+                controller.SetSeed((int)prop["Seed"]);
 
                 SceneManager.LoadScene("BattleScene");
             }
@@ -35,7 +40,7 @@ namespace Ikkiuchi.TitleScenes {
                 rule.CountOfMoment.Value = (int)prop["CountOfMoment"];
                 rule.IsEnableTrump = (bool)prop["EnableTrump"];
                 rule.MaxLife = (int)prop["MaxLife"];
-                controller.SetSeed((uint)prop["Seed"]);
+                controller.SetSeed((int)prop["Seed"]);
 
                 SceneManager.LoadScene("BattleScene");
             }

@@ -12,10 +12,21 @@ namespace Ikkiuchi.Networkings {
             PhotonNetwork.ConnectUsingSettings(null);  //  photonに接続
         }
 
+        private void OnConnectedToMaster() {
+            Debug.Log("OnConnectedToMaster");
+            PhotonNetwork.JoinLobby();
+        }
+
         //  Auto接続なのでphotonに繋いだらLobbyに即時はいる
         private void OnJoinedLobby() {
             Debug.Log("OnJoinedLobby");
             model.IsServerConnected = true;
+        }
+
+        //  Auto接続なのでphotonに繋いだらLobbyに即時はいる
+        private void OnFailedToConnectToPhoton(DisconnectCause cause) {
+            Debug.LogWarning(cause.ToString());
+            model.IsServerConnected = false;
         }
 
         //  photonとの接続が切れたとき

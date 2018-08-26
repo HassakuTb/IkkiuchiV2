@@ -5,6 +5,15 @@ namespace RandomGen {
     [Serializable]
     public abstract class RandomGenerator {
 
+        private static RandomGenerator instance;
+
+        public static RandomGenerator Instance {
+            get {
+                if (instance == null) instance = new XorShift128();
+                return instance;
+            }
+        }
+
         /// <summary>
         /// シード値
         /// </summary>

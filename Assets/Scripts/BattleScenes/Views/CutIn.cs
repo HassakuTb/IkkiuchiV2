@@ -27,10 +27,8 @@ namespace Ikkiuchi.BattleScenes.Views {
         private float currentTime = 0;
         private bool isAnimating;
 
-        [Inject] private Controller controller;
-
         private void Start() {
-            this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
+            this.ObserveEveryValueChanged(_ => Controller.Instance.CurrentPhase)
                 .Where(p => p == Phase.Start || p == Phase.MovePlot || p == Phase.ActionPlot || p == Phase.Resolve)
                 .Subscribe(p => {
                     switch (p) {
@@ -83,11 +81,11 @@ namespace Ikkiuchi.BattleScenes.Views {
 
                 //  開始処理
                 if(target == start) {
-                    controller.DealCards();
+                    Controller.Instance.DealCards();
                 }
 
                 else if (target == resolve) {
-                    controller.CurrentIndex = 0;
+                    Controller.Instance.CurrentIndex = 0;
                     resolveInvoker.StartResolve();
                 }
             }

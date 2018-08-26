@@ -9,12 +9,15 @@ namespace Ikkiuchi.BattleScenes.Views {
     [RequireComponent(typeof(Image))]
     public class ResolveFocus : MonoBehaviour {
 
-        [Inject] private Controller controller;
-        [Inject] private IRule rule;
+        private Controller controller;
+        private IRule rule;
 
         private const float areaWidth = 520f;
 
         private void Start() {
+            controller = Controller.Instance;
+            rule = Rule.Instance;
+            
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Subscribe(phase => {
                     if (phase == Phase.Resolve) {

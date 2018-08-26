@@ -12,12 +12,14 @@ using UnityEngine.UI;
 namespace Ikkiuchi.BattleScenes.Views {
     public class SettleControl : MonoBehaviour {
 
-        [Inject] private Controller controller;
+        private Controller controller;
 
         public GameObject window;
         public Text settleText;
 
         private void Start() {
+            controller = Controller.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Subscribe(phase => {
                     if(phase == Phase.Settle) {

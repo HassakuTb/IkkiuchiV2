@@ -15,10 +15,13 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject draggingArrowPrefab;
         public GameObject draggingActionPrefab;
 
-        [Inject] private Controller controller;
-        [Inject] private PlotViewModel plotModel;
+        private Controller controller;
+        private PlotViewModel plotModel;
 
         private void Start() {
+            controller = Controller.Instance;
+            plotModel = PlotViewModel.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Subscribe(p => {
                     CanvasGroup cg = GetComponent<CanvasGroup>();

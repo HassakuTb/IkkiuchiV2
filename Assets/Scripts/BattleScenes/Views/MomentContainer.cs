@@ -15,11 +15,15 @@ namespace Ikkiuchi.BattleScenes.Views {
         public GameObject draggingArrowPrefab;
         public GameObject draggingActionPrefab;
 
-        [Inject] private IRule rule;
-        [Inject] private Controller controller;
-        [Inject] private PlotViewModel model;
+        private IRule rule;
+        private Controller controller;
+        private PlotViewModel model;
 
         private void Start() {
+            rule = Rule.Instance;
+            controller = Controller.Instance;
+            model = PlotViewModel.Instance;
+
             this.ObserveEveryValueChanged(_ => controller.CurrentPhase)
                 .Where(p => p == Phase.Start)
                 .Subscribe(_ => {
